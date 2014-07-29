@@ -1,29 +1,64 @@
 package io.computerscience.android.androidotto;
 
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+
+import com.squareup.otto.Bus;
+import com.squareup.otto.Produce;
+import com.squareup.otto.Subscribe;
+
+import io.computerscience.android.androidotto.Event.EventBusHelper;
+import io.computerscience.android.androidotto.Event.Type.BusEvent;
+import io.computerscience.android.androidotto.Event.Type.ButtonClickedEvent;
+import io.computerscience.android.androidotto.Fragment.SimpleFragment;
 
 
+public class MainUserActivity extends FragmentActivity {
 
-public class MainUserActivity extends Activity {
+
+    private static String TAG = MainUserActivity.class.getSimpleName();
+    private Bus eventBus = EventBusHelper.getInstance();
+
+    private int recentValue;
+    private Object recentSource;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main_user);
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentA, new SimpleFragment())
+                    .commit();
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentB, new SimpleFragment())
                     .commit();
         }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Register as a Producer
+        eventBus.register(this);
+        postEvent(new ButtonClickedEvent(this, 100));
+    }
+
+
+    @Override
+    protected void onPause() {
+        // Unregister as a Producer
+        eventBus.unregister(this);
+        super.onPause();
     }
 
 
@@ -34,31 +69,52 @@ public class MainUserActivity extends Activity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        postEvent(new ButtonClickedEvent(this, id));
+
         if (id == R.id.action_settings) {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
+
     /**
-     * A placeholder fragment containing a simple view.
+     * Anytime any new Broadcaster are registered, We are the Authority on it the
+     * last value that was registered for this type of event.
+     * @return
      */
-    public static class PlaceholderFragment extends Fragment {
+    @Produce
+    public ButtonClickedEvent getRecentValue() {
+        return new ButtonClickedEvent(recentSource, recentValue);
+    }
 
-        public PlaceholderFragment() {
-        }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main_user, container, false);
-            return rootView;
+    /**
+     * Listen for events from other broadcasters.
+     *
+     * @param event
+     */
+    @Subscribe
+    public void updateState(ButtonClickedEvent event) {
+        recentValue = event.getValue();
+    }
+
+
+    /**
+     * Helper method for posting an event, and rem
+     * @param event
+     */
+    protected void postEvent(BusEvent event) {
+        Log.d(TAG, "Posting Event");
+        if (event instanceof ButtonClickedEvent) {
+            recentSource = ((ButtonClickedEvent) event).getSource();
+            recentValue = ((ButtonClickedEvent)event).getValue();
         }
+        eventBus.post(event);
     }
 }

@@ -9,8 +9,21 @@
     tools:context=".MainUserActivity$PlaceholderFragment">
 
     <TextView
-        android:text="@string/hello_world"
+        android:id="@+id/simpleTextField"
+        android:text="@string/simple_string"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"/>
 
+    <Button
+        android:id="@+id/fragmentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/simpleTextField"
+        android:layout_centerHorizontal="true"
+        android:text="Simple Button"
+        android:textSize="25dp"
+        />
 </RelativeLayout>
