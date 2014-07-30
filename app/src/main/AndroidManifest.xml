@@ -3,12 +3,13 @@
     package="io.computerscience.android.androidotto" >
 
     <application
+        android:name=".SimpleAndroidApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainUserActivity"
+            android:name=".Activity.MainUserActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

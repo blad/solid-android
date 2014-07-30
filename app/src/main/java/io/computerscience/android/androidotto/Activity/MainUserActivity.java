@@ -1,5 +1,6 @@
-package io.computerscience.android.androidotto;
+package io.computerscience.android.androidotto.Activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -10,25 +11,29 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
+import javax.inject.Inject;
+
 import io.computerscience.android.androidotto.Event.EventBusHelper;
 import io.computerscience.android.androidotto.Event.Type.BusEvent;
 import io.computerscience.android.androidotto.Event.Type.ButtonClickedEvent;
 import io.computerscience.android.androidotto.Fragment.SimpleFragment;
+import io.computerscience.android.androidotto.R;
+import io.computerscience.android.androidotto.SimpleAndroidApplication;
 
 
 public class MainUserActivity extends FragmentActivity {
 
-
     private static String TAG = MainUserActivity.class.getSimpleName();
-    private Bus eventBus = EventBusHelper.getInstance();
-
     private int recentValue;
     private Object recentSource;
 
+    @Inject Context context;
+    @Inject Bus eventBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((SimpleAndroidApplication) getApplication()).inject(this); // Dagger Injection
 
         setContentView(R.layout.activity_main_user);
         if (savedInstanceState == null) {
