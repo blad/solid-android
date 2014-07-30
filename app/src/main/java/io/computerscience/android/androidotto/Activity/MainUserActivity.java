@@ -13,7 +13,6 @@ import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
-import io.computerscience.android.androidotto.Event.EventBusHelper;
 import io.computerscience.android.androidotto.Event.Type.BusEvent;
 import io.computerscience.android.androidotto.Event.Type.ButtonClickedEvent;
 import io.computerscience.android.androidotto.Fragment.SimpleFragment;

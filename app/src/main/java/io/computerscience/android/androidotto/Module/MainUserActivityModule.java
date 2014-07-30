@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import io.computerscience.android.androidotto.Activity.MainUserActivity;
-import io.computerscience.android.androidotto.Event.EventBusHelper;
+import io.computerscience.android.androidotto.Fragment.SimpleFragment;
 
 // `complete` = {true|false}
 // Incomplete modules are permitted to have missing dependencies.
@@ -18,19 +18,24 @@ import io.computerscience.android.androidotto.Event.EventBusHelper;
 // If your module's bindings will be used outside of the listed injects then mark the module
 // as a library.
 //
-@Module (injects = MainUserActivity.class,
-        complete = false)
+@Module (injects = {MainUserActivity.class, SimpleFragment.class},
+         complete = false,
+         library = true)
 public class MainUserActivityModule {
     private final Context application;
+
 
     public MainUserActivityModule(Context ctx) {
         application = ctx;
     }
 
+
     @Provides @Singleton Context provideApplicationContext() {
         return application;
     }
+
+
     @Provides @Singleton Bus provideEventBus() {
-        return EventBusHelper.getInstance();
+        return new Bus();
     }
 }

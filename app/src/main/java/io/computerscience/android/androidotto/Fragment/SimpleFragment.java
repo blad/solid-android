@@ -1,6 +1,8 @@
 package io.computerscience.android.androidotto.Fragment;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,14 +12,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import io.computerscience.android.androidotto.Event.EventBusHelper;
 import io.computerscience.android.androidotto.Event.Type.ButtonClickedEvent;
 import io.computerscience.android.androidotto.R;
+import io.computerscience.android.androidotto.SimpleAndroidApplication;
 
 public class SimpleFragment extends Fragment {
     private static int instace = 0;
@@ -26,6 +31,16 @@ public class SimpleFragment extends Fragment {
     private int lastBroadcastValue;
     @InjectView(R.id.simpleTextField) TextView simpleTextField;
     @InjectView(R.id.fragmentButton)  Button   fragmentButton;
+
+    @Inject Context context;
+    @Inject Bus eventBus;
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        ((SimpleAndroidApplication) activity.getApplication()).inject(this); // Dagger Injection
+    }
 
 
     @Override
@@ -42,14 +57,14 @@ public class SimpleFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "Register Subscriber: " + SimpleFragment.class.getSimpleName());
-        EventBusHelper.getInstance().register(this); // Register as a subscriber
+        eventBus.register(this); // Register as a subscriber
     }
 
 
     @Override
     public void onPause() {
         Log.d(TAG, "Unregister Subscriber: "+ SimpleFragment.class.getSimpleName());
-        EventBusHelper.getInstance().unregister(this); // Unregister as we probaly will not need to update if not visible.
+        eventBus.unregister(this); // Unregister as we probaly will not need to update if not visible.
         super.onPause();
     }
 
@@ -81,7 +96,7 @@ public class SimpleFragment extends Fragment {
     public void buttonIsClicked() {
         Log.d(TAG, "Text View Clicked!");
         lastBroadcastValue = fragNum;
-        EventBusHelper.getInstance().post(new ButtonClickedEvent(this, fragNum));
+        eventBus.post(new ButtonClickedEvent(this, fragNum));
     }
 
 }
