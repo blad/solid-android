@@ -1,4 +1,4 @@
-Sample Android Project | Android Studio + Otto, Dagger and ButterKnife !["Build Status"](https://travis-ci.org/blad/android-otto.svg?branch=master)
+Sample Android Project | Android Studio + Otto, Dagger and ButterKnife !["Build Status"](https://travis-ci.org/blad/android-studio-example-project.svg?branch=master)
 ===================================================================================================================================================
 
 This is a simple example project that makes use of:
