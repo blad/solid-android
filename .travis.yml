@@ -1,17 +1,10 @@
 language: android
-install:
+before_install:
     - echo yes | android update sdk --no-ui --all --filter $(android list sdk --all | grep "Android SDK Platform-tools, revision 20*" | sed "s/\([0-9]*\)-.*/\1/")
     - echo yes | android update sdk --no-ui --all --filter 1
     - echo yes | android update sdk --no-ui --all --filter $(android list sdk --all | grep "Android Support Library*" | sed "s/\([0-9]*\)-.*/\1/")
     - echo yes | android update sdk --no-ui --all --filter $(android list sdk --all | grep "Android Support Repository*" | sed "s/\([0-9]*\)-.*/\1/")
     - echo yes | android update sdk --no-ui --all --filter $(android list sdk --all | grep "Android SDK Build-tools, revision 20*" | sed "s/\([0-9]*\)-.*/\1/")
 
-android:
-  components:
-    - build-tools-20.0.0
-    - android-19
-    - sysimg-19
-    - extra-android-support-20
-    - extra-android-m2repository
-  licenses:
-    - android-sdk-license-5be876d5
+script:
+    - ./gradlew assembleDebug
