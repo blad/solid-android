@@ -2,7 +2,6 @@ package io.computerscience.android.androidotto.Fragment;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,27 +19,29 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import io.computerscience.android.androidotto.Event.Type.ButtonClickedEvent;
-import io.computerscience.android.androidotto.Interface.Injectable;
+import dagger.Module;
+import io.computerscience.android.androidotto.Interface.DaggerInjector;
+import io.computerscience.android.androidotto.Module.SingletonModule;
 import io.computerscience.android.androidotto.R;
-import io.computerscience.android.androidotto.SimpleAndroidApplication;
 
 public class SimpleFragment extends Fragment {
     private static int instace = 0;
     private int fragNum;
     private static String TAG = SimpleFragment.class.getSimpleName();
     private int lastBroadcastValue;
+
     @InjectView(R.id.simpleTextField) TextView simpleTextField;
     @InjectView(R.id.fragmentButton)  Button   fragmentButton;
 
-    @Inject Context context;
     @Inject Bus eventBus;
 
+    @Module(injects = {SimpleFragment.class}, includes = SingletonModule.class)
+    public static class SimpleFragmentModule {}
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((Injectable) activity.getApplication()).inject(this); // Dagger Injection
+        ((DaggerInjector) activity.getApplication()).inject(this); // Dagger Injection
         Log.e(TAG, "Event Bus Object"+ eventBus.toString() + eventBus.hashCode());
     }
 
@@ -99,6 +100,28 @@ public class SimpleFragment extends Fragment {
         Log.d(TAG, "Text View Clicked!");
         lastBroadcastValue = fragNum;
         eventBus.post(new ButtonClickedEvent(this, fragNum));
+    }
+
+    /**
+     * A sample event type used in the sample application. Used to denote that a button click happened.
+     */
+    public static class ButtonClickedEvent {
+
+        protected Object source;
+        protected int value;
+
+        public ButtonClickedEvent(Object src, int val){
+            value = val;
+            source = src;
+        }
+
+        public Object getSource() {
+            return source;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 
 }

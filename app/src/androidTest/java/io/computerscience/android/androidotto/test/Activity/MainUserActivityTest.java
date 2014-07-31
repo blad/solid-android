@@ -10,10 +10,11 @@ import android.util.Log;
 
 import com.squareup.otto.Bus;
 
+import dagger.Module;
+import dagger.Provides;
 import io.computerscience.android.androidotto.Activity.MainUserActivity;
-import io.computerscience.android.androidotto.Interface.Injectable;
+import io.computerscience.android.androidotto.Fragment.SimpleFragment;
 import io.computerscience.android.androidotto.test.Application.MockApplicationInjectable;
-import io.computerscience.android.androidotto.test.Module.MainUserActivityTestModule;
 import io.computerscience.android.androidotto.test.Module.SingletonTestModule;
 
 import static org.mockito.Mockito.anyObject;
@@ -27,15 +28,24 @@ public class MainUserActivityTest extends ActivityUnitTestCase<MainUserActivity>
     private Application mApplication;
     private Context mContext;
 
+    //region start-module-def
+    @Module(injects = MainUserActivity.class, includes = SingletonTestModule.class)
+    public class MainUserActivityTestModule {
+        // Sample Mocke String Injected...
+        @Provides String provideStringValue() { return "Mock String"; }
+    }
+
+    @Module(injects = SimpleFragment.class, includes = SingletonTestModule.class)
+    public class SimpleFragmentTestModule {}
+
     public MainUserActivityTest() {
         super(MainUserActivity.class);
     }
-
+    //endregion
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
-
         // See: http://stackoverflow.com/questions/12267572/mockito-dexmaker-on-android
         System.setProperty("dexmaker.dexcache",getInstrumentation().getTargetContext().getCacheDir().getPath());
         mContext = new ContextWrapper(getInstrumentation().getTargetContext()) {
@@ -45,12 +55,14 @@ public class MainUserActivityTest extends ActivityUnitTestCase<MainUserActivity>
             }
         };
 
+        // Complete the implementation of the Application class
+        // with the modules required for this test in particular.
         mApplication = new MockApplicationInjectable(mContext){
             @Override
             public Object[] getModules() {
                 return new Object[]{
                         new MainUserActivityTestModule(),
-                        new SingletonTestModule(mContext),
+                        new SimpleFragmentTestModule()
                 };
             }
         };
@@ -63,7 +75,6 @@ public class MainUserActivityTest extends ActivityUnitTestCase<MainUserActivity>
         startActivity(new Intent(mContext, MainUserActivity.class), null, null);
         activity = getActivity();
 
-        assertNotNull(((MainUserActivity) activity).getContext());
         assertTrue(activity.getApplicationContext() instanceof MockApplicationInjectable);
 
         activity.finish();
@@ -74,6 +85,7 @@ public class MainUserActivityTest extends ActivityUnitTestCase<MainUserActivity>
         setActivityContext(mContext);
         startActivity(new Intent(mContext, MainUserActivity.class), null, null);
         activity = getActivity();
+
         getInstrumentation().callActivityOnResume(activity);
         getInstrumentation().callActivityOnPause(activity);
         Bus eventBus = ((MainUserActivity) activity).getEventBus();

@@ -11,19 +11,18 @@ import dagger.Provides;
 import io.computerscience.android.androidotto.Activity.MainUserActivity;
 import io.computerscience.android.androidotto.Fragment.SimpleFragment;
 
-@Module(injects = {MainUserActivity.class, SimpleFragment.class},
-        complete = false,
-        library = true)
+/**
+ * This module defines is a provider for singletons across the application.
+ *
+ * If you find yourself creating a singleton class, you may be able to simply
+ * use the @Singleton annotation and inject the singleton into your activities
+ * or fragments.
+ *
+ * This module is intended to be extended. Use `includes = SingletonModule.class`
+ * to include the injections defined here.
+ */
+@Module(library = true)
 public class SingletonModule {
-    protected Context application;
-
-    public SingletonModule(Context ctx) {
-        application = ctx;
-    }
-
-    @Provides @Singleton Context provideApplicationContext() {
-        return application;
-    }
     @Provides @Singleton Bus provideEventBus() {
         return new Bus();
     }

@@ -1,6 +1,5 @@
 package io.computerscience.android.androidotto.Activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -13,12 +12,12 @@ import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
-import io.computerscience.android.androidotto.Event.Type.BusEvent;
-import io.computerscience.android.androidotto.Event.Type.ButtonClickedEvent;
+import dagger.Module;
+import dagger.Provides;
 import io.computerscience.android.androidotto.Fragment.SimpleFragment;
-import io.computerscience.android.androidotto.Interface.Injectable;
+import io.computerscience.android.androidotto.Interface.DaggerInjector;
+import io.computerscience.android.androidotto.Module.SingletonModule;
 import io.computerscience.android.androidotto.R;
-import io.computerscience.android.androidotto.SimpleAndroidApplication;
 
 
 public class MainUserActivity extends FragmentActivity {
@@ -27,14 +26,21 @@ public class MainUserActivity extends FragmentActivity {
     private int recentValue;
     private Object recentSource;
 
-    @Inject Context context;
     @Inject Bus eventBus;
     @Inject String sampleString;
+
+    @Module(injects = MainUserActivity.class, includes = SingletonModule.class)
+    public static class MainUserActivityModule {
+        // Sample Provider:
+        @Provides String provideStringValue() {
+            return "Hello World";
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((Injectable) getApplication()).inject(this); // Dagger Injection
+        ((DaggerInjector) getApplication()).inject(this); // Dagger Injection
         Log.e(TAG, "Event Bus Object"+ eventBus.toString() + eventBus.hashCode());
         setContentView(R.layout.activity_main_user);
         if (savedInstanceState == null) {
@@ -56,7 +62,7 @@ public class MainUserActivity extends FragmentActivity {
         super.onResume();
         // Register as a Producer
         eventBus.register(this);
-        postEvent(new ButtonClickedEvent(this, 100));
+        postEvent(new SimpleFragment.ButtonClickedEvent(this, 100));
     }
 
 
@@ -79,7 +85,7 @@ public class MainUserActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        postEvent(new ButtonClickedEvent(this, id));
+        postEvent(new SimpleFragment.ButtonClickedEvent(this, id));
 
         if (id == R.id.action_settings) {
             return true;
@@ -95,8 +101,8 @@ public class MainUserActivity extends FragmentActivity {
      * @return
      */
     @Produce
-    public ButtonClickedEvent getRecentValue() {
-        return new ButtonClickedEvent(recentSource, recentValue);
+    public SimpleFragment.ButtonClickedEvent getRecentValue() {
+        return new SimpleFragment.ButtonClickedEvent(recentSource, recentValue);
     }
 
 
@@ -106,7 +112,7 @@ public class MainUserActivity extends FragmentActivity {
      * @param event
      */
     @Subscribe
-    public void updateState(ButtonClickedEvent event) {
+    public void updateState(SimpleFragment.ButtonClickedEvent event) {
         recentValue = event.getValue();
     }
 
@@ -115,21 +121,15 @@ public class MainUserActivity extends FragmentActivity {
      * Helper method for posting an event, and rem
      * @param event
      */
-    protected void postEvent(BusEvent event) {
+    protected void postEvent(SimpleFragment.ButtonClickedEvent event) {
         Log.d(TAG, "Posting Event");
-        if (event instanceof ButtonClickedEvent) {
-            recentSource = ((ButtonClickedEvent) event).getSource();
-            recentValue = ((ButtonClickedEvent)event).getValue();
-        }
+        recentSource = ((SimpleFragment.ButtonClickedEvent) event).getSource();
+        recentValue = ((SimpleFragment.ButtonClickedEvent)event).getValue();
         eventBus.post(event);
     }
 
     public Bus getEventBus() {
         return eventBus;
-    }
-
-    public Context getContext() {
-        return context;
     }
 
     public String getSampleString() {

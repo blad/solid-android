@@ -4,16 +4,16 @@ import android.app.Application;
 import android.content.Context;
 
 import dagger.ObjectGraph;
-import io.computerscience.android.androidotto.Interface.Injectable;
-import io.computerscience.android.androidotto.Module.SingletonModule;
-import io.computerscience.android.androidotto.SimpleAndroidApplication;
-import io.computerscience.android.androidotto.test.Module.MainUserActivityTestModule;
-import io.computerscience.android.androidotto.test.Module.SingletonTestModule;
+import io.computerscience.android.androidotto.Interface.DaggerInjector;
 
 /**
- * Created by tellez on 7/30/14.
+ * This class defined standard behaviour that DaggerInjector needs, and provides an
+ * application context for tests
+ *
+ * Define the getModules() method in an anonymous inner-class implementation defined
+ * within each Test, since not all modules will be required for all tests.
  */
-public abstract class MockApplicationInjectable extends Application implements Injectable {
+public abstract class MockApplicationInjectable extends Application implements DaggerInjector {
     private ObjectGraph mObjectGraph;
 
     public MockApplicationInjectable(Context context) {

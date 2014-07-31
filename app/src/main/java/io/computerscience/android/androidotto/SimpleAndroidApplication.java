@@ -4,11 +4,11 @@ import android.app.Application;
 import android.content.Context;
 
 import dagger.ObjectGraph;
-import io.computerscience.android.androidotto.Interface.Injectable;
-import io.computerscience.android.androidotto.Module.Modules;
+import io.computerscience.android.androidotto.Activity.MainUserActivity;
+import io.computerscience.android.androidotto.Fragment.SimpleFragment;
+import io.computerscience.android.androidotto.Interface.DaggerInjector;
 
-public class SimpleAndroidApplication extends Application implements Injectable {
-    ObjectGraph graph;
+public class SimpleAndroidApplication extends Application implements DaggerInjector {
 
     private ObjectGraph mObjectGraph;
 
@@ -18,18 +18,21 @@ public class SimpleAndroidApplication extends Application implements Injectable 
         mObjectGraph = ObjectGraph.create(getModules());
     }
 
+
     @Override
     public Object[] getModules() {
-        return Modules.list(getApplicationContext());
+        return new Object[]{
+                // Each Activity and Class Defined their own Injector,
+                // Shared Modules should go under the ../Module package
+                new MainUserActivity.MainUserActivityModule(),
+                new SimpleFragment.SimpleFragmentModule()
+        };
     }
+
 
     @Override
     public void inject(Object o) {
         mObjectGraph.inject(o);
-    }
-
-    public static Injectable getInjectable(Context context) {
-        return (Injectable) context.getApplicationContext();
     }
 
 }
