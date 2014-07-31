@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import io.computerscience.android.androidotto.Event.Type.BusEvent;
 import io.computerscience.android.androidotto.Event.Type.ButtonClickedEvent;
 import io.computerscience.android.androidotto.Fragment.SimpleFragment;
+import io.computerscience.android.androidotto.Interface.Injectable;
 import io.computerscience.android.androidotto.R;
 import io.computerscience.android.androidotto.SimpleAndroidApplication;
 
@@ -28,12 +29,13 @@ public class MainUserActivity extends FragmentActivity {
 
     @Inject Context context;
     @Inject Bus eventBus;
+    @Inject String sampleString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((SimpleAndroidApplication) getApplication()).inject(this); // Dagger Injection
-
+        ((Injectable) getApplication()).inject(this); // Dagger Injection
+        Log.e(TAG, "Event Bus Object"+ eventBus.toString() + eventBus.hashCode());
         setContentView(R.layout.activity_main_user);
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -60,9 +62,9 @@ public class MainUserActivity extends FragmentActivity {
 
     @Override
     protected void onPause() {
+        super.onPause();
         // Unregister as a Producer
         eventBus.unregister(this);
-        super.onPause();
     }
 
 
@@ -120,5 +122,17 @@ public class MainUserActivity extends FragmentActivity {
             recentValue = ((ButtonClickedEvent)event).getValue();
         }
         eventBus.post(event);
+    }
+
+    public Bus getEventBus() {
+        return eventBus;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public String getSampleString() {
+        return sampleString;
     }
 }

@@ -1,26 +1,35 @@
 package io.computerscience.android.androidotto;
 
 import android.app.Application;
+import android.content.Context;
 
 import dagger.ObjectGraph;
-import io.computerscience.android.androidotto.Module.MainUserActivityModule;
+import io.computerscience.android.androidotto.Interface.Injectable;
+import io.computerscience.android.androidotto.Module.Modules;
 
-public class SimpleAndroidApplication extends Application {
+public class SimpleAndroidApplication extends Application implements Injectable {
     ObjectGraph graph;
+
+    private ObjectGraph mObjectGraph;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        graph = ObjectGraph.create(getModules());
+        mObjectGraph = ObjectGraph.create(getModules());
     }
 
-    protected Object[] getModules() {
-        return new Object[] { new MainUserActivityModule(this) };
+    @Override
+    public Object[] getModules() {
+        return Modules.list(getApplicationContext());
     }
 
-    public void inject(Object object) {
-        graph.inject(object);
+    @Override
+    public void inject(Object o) {
+        mObjectGraph.inject(o);
     }
 
+    public static Injectable getInjectable(Context context) {
+        return (Injectable) context.getApplicationContext();
+    }
 
 }

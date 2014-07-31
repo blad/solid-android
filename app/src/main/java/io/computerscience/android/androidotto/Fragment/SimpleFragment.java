@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import io.computerscience.android.androidotto.Event.Type.ButtonClickedEvent;
+import io.computerscience.android.androidotto.Interface.Injectable;
 import io.computerscience.android.androidotto.R;
 import io.computerscience.android.androidotto.SimpleAndroidApplication;
 
@@ -39,7 +40,8 @@ public class SimpleFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((SimpleAndroidApplication) activity.getApplication()).inject(this); // Dagger Injection
+        ((Injectable) activity.getApplication()).inject(this); // Dagger Injection
+        Log.e(TAG, "Event Bus Object"+ eventBus.toString() + eventBus.hashCode());
     }
 
 
