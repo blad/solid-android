@@ -29,7 +29,7 @@ public class SingletonModule {
         return new Bus();
     }
 
-    @Provides @Singleton SimpleApi provideSimpleApi() {
-        return new SimpleApi();
+    @Provides @Singleton SimpleApi provideSimpleApi(Bus bus) {
+        return new SimpleApi(bus);
     }
 }
