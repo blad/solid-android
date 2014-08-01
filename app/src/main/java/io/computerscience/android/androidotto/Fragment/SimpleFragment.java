@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import dagger.Module;
+import hugo.weaving.DebugLog;
 import io.computerscience.android.androidotto.Interface.DaggerInjector;
 import io.computerscience.android.androidotto.Module.SingletonModule;
 import io.computerscience.android.androidotto.R;
@@ -36,7 +37,9 @@ public class SimpleFragment extends Fragment {
     @Inject Bus eventBus;
 
     @Module(injects = {SimpleFragment.class}, includes = SingletonModule.class)
-    public static class SimpleFragmentModule {}
+    public static class SimpleFragmentModule {
+        // Define any dependency providers in this class.
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -80,6 +83,20 @@ public class SimpleFragment extends Fragment {
 
 
     /**
+     * On Click Listener for R.id.fragmentButton
+     * Note: the parameter is optional
+     */
+    @DebugLog
+    @OnClick(R.id.fragmentButton)
+    public void buttonIsClicked(Button clickedButton) {
+        Log.d(TAG, "Text View Clicked!");
+        lastBroadcastValue = fragNum;
+        eventBus.post(new ButtonClickedEvent(this, fragNum));
+    }
+
+
+    //region Event Produces and Subscribers
+    /**
      * Event Listener for ButtonClickedEvent.
      * @param event
      */
@@ -91,16 +108,6 @@ public class SimpleFragment extends Fragment {
         }
     }
 
-
-    /**
-     * On Click Listener for R.id.fragmentButton
-     */
-    @OnClick(R.id.fragmentButton)
-    public void buttonIsClicked() {
-        Log.d(TAG, "Text View Clicked!");
-        lastBroadcastValue = fragNum;
-        eventBus.post(new ButtonClickedEvent(this, fragNum));
-    }
 
     /**
      * A sample event type used in the sample application. Used to denote that a button click happened.
@@ -118,10 +125,11 @@ public class SimpleFragment extends Fragment {
         public Object getSource() {
             return source;
         }
-
         public int getValue() {
             return value;
         }
+
     }
+    //endregion
 
 }

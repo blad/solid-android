@@ -9,16 +9,24 @@ import dagger.Provides;
 import io.computerscience.android.androidotto.Activity.MainUserActivity;
 import io.computerscience.android.androidotto.Fragment.SimpleFragment;
 import io.computerscience.android.androidotto.Interface.DaggerInjector;
+import io.computerscience.android.androidotto.Module.SingletonModule;
 import io.computerscience.android.androidotto.Network.SimpleApi;
 
 public class SimpleAndroidApplication extends Application implements DaggerInjector {
 
+    //region Application Context Module
     @Module(library = true)
-    public class ApplicationContextModule {
+    public final class ApplicationContextModule {
+        Context context;
+        public ApplicationContextModule(Context app) {
+            context = app;
+        }
+
         @Provides public Context provideContext(){
-            return SimpleAndroidApplication.this.getApplicationContext();
+            return context;
         }
     }
+    //endregion
 
     private ObjectGraph mObjectGraph;
 
@@ -36,7 +44,7 @@ public class SimpleAndroidApplication extends Application implements DaggerInjec
                 // Shared Modules should go under the ../Module package
                 new MainUserActivity.MainUserActivityModule(),
                 new SimpleFragment.SimpleFragmentModule(),
-                new ApplicationContextModule()
+                new ApplicationContextModule(this)
         };
     }
 

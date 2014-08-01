@@ -31,13 +31,15 @@ public class MainUserActivity extends FragmentActivity {
     @Inject String    sampleString;
     @Inject SimpleApi api;
 
+    //region Module that injects this class and components used by this class
     @Module(injects = {MainUserActivity.class, SimpleApi.class}, includes = SingletonModule.class)
     public static class MainUserActivityModule {
-        // Sample Provider:
+        // Sample Provider for this class:
         @Provides String provideStringValue() {
             return "Hello World";
         }
     }
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class MainUserActivity extends FragmentActivity {
         // Register as a Producer
         eventBus.register(this);
         postEvent(new SimpleFragment.ButtonClickedEvent(this, 100));
-        api.getAllData(this);
+        api.getAllData();
     }
 
 
@@ -98,7 +100,7 @@ public class MainUserActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    //region Event Producers and Subscribers
     /**
      * Anytime any new Broadcaster are registered, We are the Authority on it the
      * last value that was registered for this type of event.
@@ -135,7 +137,7 @@ public class MainUserActivity extends FragmentActivity {
         Log.d(TAG, "Network Exception:"+ event.getResult().toString());
         // Do something with network event
     }
-
+    //endregion
 
     /**
      * Helper method for posting an event, and rem
@@ -146,10 +148,6 @@ public class MainUserActivity extends FragmentActivity {
         recentSource = ((SimpleFragment.ButtonClickedEvent) event).getSource();
         recentValue = ((SimpleFragment.ButtonClickedEvent)event).getValue();
         eventBus.post(event);
-    }
-
-    public Bus getEventBus() {
-        return eventBus;
     }
 
     public String getSampleString() {

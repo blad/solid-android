@@ -8,9 +8,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.computerscience.android.androidotto.Activity.MainUserActivity;
-import io.computerscience.android.androidotto.Fragment.SimpleFragment;
 import io.computerscience.android.androidotto.Network.SimpleApi;
+import io.computerscience.android.androidotto.SimpleAndroidApplication;
 
 /**
  * This module defines is a provider for singletons across the application.
@@ -21,15 +20,21 @@ import io.computerscience.android.androidotto.Network.SimpleApi;
  *
  * This module is intended to be extended. Use `includes = SingletonModule.class`
  * to include the injections defined here.
+ *
+ * including the ApplicationContextModule allows us to resolve the Context dependencies
+ * automatically. Ensure that a ApplicationContextModule is initialize and added to the
+ * list of modules being initialized.
  */
-@Module(library = true)
+@Module(library = true, includes = SimpleAndroidApplication.ApplicationContextModule.class)
 public class SingletonModule {
 
     @Provides @Singleton Bus provideEventBus() {
         return new Bus();
     }
 
-    @Provides @Singleton SimpleApi provideSimpleApi(Bus bus) {
-        return new SimpleApi(bus);
+    // The parameter to this provider indicates that SimpleApi has a dependency on Bus.
+    // This dependency will be resolved automatically by Dagger upon injection.
+    @Provides @Singleton SimpleApi provideSimpleApi(Bus bus, Context context) {
+        return new SimpleApi(bus, context);
     }
 }

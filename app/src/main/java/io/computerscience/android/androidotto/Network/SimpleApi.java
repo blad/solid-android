@@ -11,35 +11,41 @@ import com.squareup.otto.Bus;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import hugo.weaving.DebugLog;
+
 @Singleton
 public class SimpleApi {
+    private static final String TAG = SimpleApi.class.getSimpleName();
 
+    Context context; // Injected via constructor
     Bus eventBus; // Injected via constructor
 
-    @Inject public SimpleApi(Bus bus) {
+    @Inject public SimpleApi(Bus bus, Context ctx) {
         eventBus = bus;
+        context = ctx;
     }
 
     FutureCallback<JsonObject> standardCallback = new FutureCallback<JsonObject>() {
         @Override
         public void onCompleted(Exception e, JsonObject result) {
             if (!isValidResult(e, result)) {
-                Log.d("LOG", e.getMessage());
+                Log.d(TAG, e.getMessage());
                 eventBus.post(new Failure(e));
                 return;
             }
             eventBus.post(new Success(result));
-            Log.d("LOG R", result.toString());
+            Log.d(TAG, result.toString());
         }
     };
 
-    public void getAllData(Context context) {
+    public void getAllData() {
         Ion.with(context)
                 .load("http://redditapi.herokuapp.com/json")
                 .asJsonObject()
                 .setCallback(standardCallback);
     }
 
+    @DebugLog
     public boolean isValidResult(Exception e, JsonObject result) {
         // TODO: Implement a better is valid method.
         return e == null && result != null;

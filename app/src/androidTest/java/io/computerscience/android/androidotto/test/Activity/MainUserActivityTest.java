@@ -90,7 +90,8 @@ public class MainUserActivityTest extends ActivityUnitTestCase<MainUserActivity>
                 return new Object[]{
                         new SelfInjectorModule(),
                         new MainUserActivityTestModule(),
-                        new SimpleFragmentTestModule()
+                        new SimpleFragmentTestModule(),
+                        new MockApplicationContextModule(this)
                 };
             }
         };
@@ -120,7 +121,6 @@ public class MainUserActivityTest extends ActivityUnitTestCase<MainUserActivity>
     public void testMockObject() throws Exception {
         getInstrumentation().callActivityOnResume(activity);
         getInstrumentation().callActivityOnPause(activity);
-        Bus eventBus = ((MainUserActivity) activity).getEventBus();
         Log.e("TEST", "Event Bus Object" + eventBus.toString() + eventBus.hashCode());
         verify(eventBus, times(3)).register(anyObject());
         verify(eventBus, atLeastOnce()).post(anyObject());
@@ -135,13 +135,13 @@ public class MainUserActivityTest extends ActivityUnitTestCase<MainUserActivity>
                 eventBus.post(new SimpleApi.Success(new JsonObject()));
                 return null;
             }
-        }).when(simpleApi).getAllData(any(Context.class));
+        }).when(simpleApi).getAllData();
 
         getInstrumentation().callActivityOnResume(activity);
         getInstrumentation().callActivityOnPause(activity);
 
         // Verify API was called
-        verify(simpleApi, times(1)).getAllData(any(Context.class));
+        verify(simpleApi, times(1)).getAllData();
         verify(eventBus, times(1)).post(isA(SimpleApi.Success.class));
     }
 
@@ -154,13 +154,13 @@ public class MainUserActivityTest extends ActivityUnitTestCase<MainUserActivity>
                 eventBus.post(new SimpleApi.Failure(new Exception()));
                 return null;
             }
-        }).when(simpleApi).getAllData(any(Context.class));
+        }).when(simpleApi).getAllData();
 
         getInstrumentation().callActivityOnResume(activity);
         getInstrumentation().callActivityOnPause(activity);
 
         // Verify API was called
-        verify(simpleApi, times(1)).getAllData(any(Context.class));
+        verify(simpleApi, times(1)).getAllData();
         verify(eventBus, times(1)).post(isA(SimpleApi.Failure.class));
 
         // Unable to do verification for the direct method call, since the system interacts
