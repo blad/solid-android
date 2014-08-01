@@ -1,10 +1,3 @@
 language: android
-before_install:
-    - echo yes | android update sdk --no-ui --all --filter $(android list sdk --all | grep "Android SDK Platform-tools, revision 20*" | sed "s/\([0-9]*\)-.*/\1/")
-    - echo yes | android update sdk --no-ui --all --filter 1
-    - echo yes | android update sdk --no-ui --all --filter $(android list sdk --all | grep "Android Support Library*" | sed "s/\([0-9]*\)-.*/\1/")
-    - echo yes | android update sdk --no-ui --all --filter $(android list sdk --all | grep "Android Support Repository*" | sed "s/\([0-9]*\)-.*/\1/")
-    - echo yes | android update sdk --no-ui --all --filter $(android list sdk --all | grep "Android SDK Build-tools, revision 20*" | sed "s/\([0-9]*\)-.*/\1/")
 
-script:
-    - ./gradlew assembleDebug
+script: ./gradlew build assembleDebug
