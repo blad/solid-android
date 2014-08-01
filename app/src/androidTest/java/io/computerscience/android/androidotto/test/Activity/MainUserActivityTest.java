@@ -29,6 +29,11 @@ public class MainUserActivityTest extends ActivityUnitTestCase<MainUserActivity>
     private Context mContext;
 
     //region start-module-def
+    /*
+     * This region is used to define modules that are needed for the classes tested
+     * in this test.
+     *
+     */
     @Module(injects = MainUserActivity.class, includes = SingletonTestModule.class)
     public class MainUserActivityTestModule {
         // Sample Mocke String Injected...

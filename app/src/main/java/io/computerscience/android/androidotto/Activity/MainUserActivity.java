@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.gson.JsonObject;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
@@ -17,6 +18,7 @@ import dagger.Provides;
 import io.computerscience.android.androidotto.Fragment.SimpleFragment;
 import io.computerscience.android.androidotto.Interface.DaggerInjector;
 import io.computerscience.android.androidotto.Module.SingletonModule;
+import io.computerscience.android.androidotto.Network.SimpleApi;
 import io.computerscience.android.androidotto.R;
 
 
@@ -26,8 +28,9 @@ public class MainUserActivity extends FragmentActivity {
     private int recentValue;
     private Object recentSource;
 
-    @Inject Bus eventBus;
-    @Inject String sampleString;
+    @Inject Bus       eventBus;
+    @Inject String    sampleString;
+    @Inject SimpleApi api;
 
     @Module(injects = MainUserActivity.class, includes = SingletonModule.class)
     public static class MainUserActivityModule {
@@ -63,6 +66,17 @@ public class MainUserActivity extends FragmentActivity {
         // Register as a Producer
         eventBus.register(this);
         postEvent(new SimpleFragment.ButtonClickedEvent(this, 100));
+        api.getAllData(this, new SimpleApi.NetworkCallback() {
+            @Override
+            public void onSuccess(JsonObject value) {
+                Log.e("Success!", value.toString());
+            }
+
+            @Override
+            public void onFailure(Exception exception) {
+                Log.e("Success!", exception.getStackTrace().toString());
+            }
+        });
     }
 
 

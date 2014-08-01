@@ -10,6 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import io.computerscience.android.androidotto.Activity.MainUserActivity;
 import io.computerscience.android.androidotto.Fragment.SimpleFragment;
+import io.computerscience.android.androidotto.Network.SimpleApi;
 
 /**
  * This module defines is a provider for singletons across the application.
@@ -23,7 +24,12 @@ import io.computerscience.android.androidotto.Fragment.SimpleFragment;
  */
 @Module(library = true)
 public class SingletonModule {
+
     @Provides @Singleton Bus provideEventBus() {
         return new Bus();
+    }
+
+    @Provides @Singleton SimpleApi provideSimpleApi() {
+        return new SimpleApi();
     }
 }
