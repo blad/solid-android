@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    To obtain an api key for the noun project see the
+    following page:
+
+    http://api.thenounproject.com/getting_started.html
+    -->
+
+    <!-- Order is important `development` must come first -->
+    <string-array name="noun_project_api_key">
+        <!-- TODO: Fill in keys -->
+        <item>fill-in-development-key</item> <!-- Development -->
+        <item>fill-in-production-key</item> <!-- Production -->
+    </string-array>
+
+    <!-- Order is important `development` must come first -->
+    <string-array name="noun_project_api_secret">
+        <!-- TODO: Fill in Secret -->
+        <item>fill-in-development-secret</item> <!-- Development -->
+        <item>fill-in-production-secret</item> <!-- Production -->
+    </string-array>
+</resources>
