@@ -1,4 +1,4 @@
-package io.computerscience.android.androidotto.Fragment;
+package com.btellez.solidandroid.fragment;
 
 
 import android.app.Activity;
@@ -21,9 +21,9 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import dagger.Module;
 import hugo.weaving.DebugLog;
-import io.computerscience.android.androidotto.Interface.DaggerInjector;
-import io.computerscience.android.androidotto.Module.SingletonModule;
-import io.computerscience.android.androidotto.R;
+import com.btellez.solidandroid.module.DaggerInjector;
+import com.btellez.solidandroid.module.SingletonModule;
+import com.btellez.solidandroid.R;
 
 public class SimpleFragment extends Fragment {
     private static int instace = 0;

@@ -1,11 +1,11 @@
-package io.computerscience.android.androidotto.test;
+package com.btellez.solidandroid.test;
 
 import android.test.InstrumentationTestRunner;
 import android.test.InstrumentationTestSuite;
 
 import junit.framework.TestSuite;
 
-import io.computerscience.android.androidotto.test.Activity.MainUserActivityTest;
+import com.btellez.solidandroid.test.activity.MainUserActivityTest;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>

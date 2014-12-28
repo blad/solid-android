@@ -1,4 +1,4 @@
-package io.computerscience.android.androidotto;
+package com.btellez.solidandroid;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,11 +6,9 @@ import android.content.Context;
 import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
-import io.computerscience.android.androidotto.Activity.MainUserActivity;
-import io.computerscience.android.androidotto.Fragment.SimpleFragment;
-import io.computerscience.android.androidotto.Interface.DaggerInjector;
-import io.computerscience.android.androidotto.Module.SingletonModule;
-import io.computerscience.android.androidotto.Network.SimpleApi;
+import com.btellez.solidandroid.activity.MainUserActivity;
+import com.btellez.solidandroid.fragment.SimpleFragment;
+import com.btellez.solidandroid.module.DaggerInjector;
 
 public class SimpleAndroidApplication extends Application implements DaggerInjector {
 

@@ -1,4 +1,4 @@
-package io.computerscience.android.androidotto.Activity;
+package com.btellez.solidandroid.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,11 +14,11 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.Provides;
-import io.computerscience.android.androidotto.Fragment.SimpleFragment;
-import io.computerscience.android.androidotto.Interface.DaggerInjector;
-import io.computerscience.android.androidotto.Module.SingletonModule;
-import io.computerscience.android.androidotto.Network.SimpleApi;
-import io.computerscience.android.androidotto.R;
+import com.btellez.solidandroid.fragment.SimpleFragment;
+import com.btellez.solidandroid.module.DaggerInjector;
+import com.btellez.solidandroid.module.SingletonModule;
+import com.btellez.solidandroid.network.SimpleApi;
+import com.btellez.solidandroid.R;
 
 
 public class MainUserActivity extends FragmentActivity {

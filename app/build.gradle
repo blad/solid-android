@@ -7,14 +7,14 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        testApplicationId "io.computerscience.android.androidotto.test"
-        testInstrumentationRunner "io.computerscience.android.androidotto.test.SimpleApplicationInstrumentationTestRunner"
+        testApplicationId "com.btellez.solidandroid.test"
+        testInstrumentationRunner "com.btellez.solidandroid.test.SimpleApplicationInstrumentationTestRunner"
         testHandleProfiling true
         testFunctionalTest true
 
-        applicationId "io.computerscience.android.androidotto"
+        applicationId "com.btellez.solidandroid"
         minSdkVersion 15
-        targetSdkVersion 19
+        targetSdkVersion 21
 
         versionCode 1
         versionName "1.0"
@@ -65,7 +65,7 @@ dependencies {
 
     // Testing Dependencies
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.1'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.+'
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.+'
-    androidTestCompile 'org.mockito:mockito-core:1.9.+'
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.1'
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.1'
+    androidTestCompile 'org.mockito:mockito-core:1.9.5'
 }

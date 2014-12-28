@@ -1,4 +1,4 @@
-package io.computerscience.android.androidotto.Module;
+package com.btellez.solidandroid.module;
 
 import android.content.Context;
 
@@ -8,8 +8,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.computerscience.android.androidotto.Network.SimpleApi;
-import io.computerscience.android.androidotto.SimpleAndroidApplication;
+import com.btellez.solidandroid.network.SimpleApi;
+import com.btellez.solidandroid.SimpleAndroidApplication;
 
 /**
  * This module defines is a provider for singletons across the application.

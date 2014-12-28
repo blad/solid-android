@@ -1,4 +1,4 @@
-package io.computerscience.android.androidotto.test.Application;
+package com.btellez.solidandroid.test;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.Context;
 import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
-import io.computerscience.android.androidotto.Interface.DaggerInjector;
+import com.btellez.solidandroid.module.DaggerInjector;
 
 /**
  * This class defined standard behaviour that DaggerInjector needs, and provides an

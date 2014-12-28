@@ -1,4 +1,4 @@
-package io.computerscience.android.androidotto.Interface;
+package com.btellez.solidandroid.module;
 
 /**
  * This interface defines behaviour that must be implemented by any

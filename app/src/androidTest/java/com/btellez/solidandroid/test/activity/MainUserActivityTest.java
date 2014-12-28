@@ -1,4 +1,4 @@
-package io.computerscience.android.androidotto.test.Activity;
+package com.btellez.solidandroid.test.activity;
 
 import android.app.Activity;
 import android.app.Application;
@@ -18,20 +18,18 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.Provides;
-import io.computerscience.android.androidotto.Activity.MainUserActivity;
-import io.computerscience.android.androidotto.Fragment.SimpleFragment;
-import io.computerscience.android.androidotto.Interface.DaggerInjector;
-import io.computerscience.android.androidotto.Network.SimpleApi;
-import io.computerscience.android.androidotto.test.Application.MockApplicationInjectable;
-import io.computerscience.android.androidotto.test.Module.SingletonTestModule;
+import com.btellez.solidandroid.activity.MainUserActivity;
+import com.btellez.solidandroid.fragment.SimpleFragment;
+import com.btellez.solidandroid.module.DaggerInjector;
+import com.btellez.solidandroid.network.SimpleApi;
+import com.btellez.solidandroid.test.MockApplicationInjectable;
+import com.btellez.solidandroid.test.module.SingletonTestModule;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.anyObject;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.only;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 

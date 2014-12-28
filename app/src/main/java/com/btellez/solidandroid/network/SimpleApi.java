@@ -1,4 +1,4 @@
-package io.computerscience.android.androidotto.Network;
+package com.btellez.solidandroid.network;
 
 import android.content.Context;
 import android.util.Log;

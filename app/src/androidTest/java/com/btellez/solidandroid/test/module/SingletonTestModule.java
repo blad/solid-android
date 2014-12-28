@@ -1,4 +1,4 @@
-package io.computerscience.android.androidotto.test.Module;
+package com.btellez.solidandroid.test.module;
 
 import android.content.Context;
 
@@ -10,8 +10,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.computerscience.android.androidotto.Network.SimpleApi;
-import io.computerscience.android.androidotto.test.Application.MockApplicationInjectable;
+import com.btellez.solidandroid.network.SimpleApi;
+import com.btellez.solidandroid.test.MockApplicationInjectable;
 
 /**
  * This class provides mock instances of the singletons so that

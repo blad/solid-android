@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Sample Application</string>
+    <string name="app_name">SOLID Android</string>
     <string name="simple_string">Simple String…</string>
     <string name="action_settings">Settings</string>
 </resources>
