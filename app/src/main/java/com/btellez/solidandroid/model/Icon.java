@@ -54,6 +54,10 @@ public class Icon implements Serializable {
         return term;
     }
 
+    public String getPreviewUrl() {
+        return preview_url;
+    }
+
     public Uploader getUploader() {
         return uploader;
     }
