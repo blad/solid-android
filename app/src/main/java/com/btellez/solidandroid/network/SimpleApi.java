@@ -1,12 +1,11 @@
 package com.btellez.solidandroid.network;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 import com.squareup.otto.Bus;
+
+import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -25,24 +24,8 @@ public class SimpleApi {
         context = ctx;
     }
 
-    FutureCallback<JsonObject> standardCallback = new FutureCallback<JsonObject>() {
-        @Override
-        public void onCompleted(Exception e, JsonObject result) {
-            if (!isValidResult(e, result)) {
-                Log.d(TAG, e.getMessage());
-                eventBus.post(new Failure(e));
-                return;
-            }
-            eventBus.post(new Success(result));
-            Log.d(TAG, result.toString());
-        }
-    };
-
     public void getAllData() {
-        Ion.with(context)
-                .load("http://redditapi.herokuapp.com/json")
-                .asJsonObject()
-                .setCallback(standardCallback);
+        eventBus.post(new Failure(new IOException()));
     }
 
     @DebugLog

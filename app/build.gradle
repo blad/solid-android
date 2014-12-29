@@ -52,13 +52,15 @@ dependencies {
     compile 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.squareup.dagger:dagger:1.2.2'
 
-    // Asynchronous HTTP
-    compile 'com.koushikdutta.ion:ion:1.3.7'
+    // HTTP Library
+    compile 'com.squareup.okhttp:okhttp:2.1.0'
+
+    // Json Library
+    compile 'com.google.code.gson:gson:2.3.1'
 
     // Android Support Library for Older Device Support:
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.android.support:support-v13:21.0.3'
-    compile 'com.android.support:gridlayout-v7:21.0.3'
 
     // Include Any jar dependencies
     compile fileTree(dir: 'libs', include: ['*.jar'])
