@@ -2,6 +2,7 @@ package com.btellez.solidandroid.fragment;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.btellez.solidandroid.activity.SearchResultsActivity;
 import com.btellez.solidandroid.module.DependencyInjector;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -93,6 +95,7 @@ public class SimpleFragment extends Fragment {
         Log.d(TAG, "Text View Clicked!");
         lastBroadcastValue = fragNum;
         eventBus.post(new ButtonClickedEvent(this, fragNum));
+        startActivity(new Intent(getActivity(), SearchResultsActivity.class));
     }
 
 

@@ -3,12 +3,14 @@ package com.btellez.solidandroid;
 import android.app.Application;
 import android.content.Context;
 
+import com.btellez.solidandroid.activity.MainUserActivity;
+import com.btellez.solidandroid.activity.SearchResultsActivity;
+import com.btellez.solidandroid.fragment.SimpleFragment;
+import com.btellez.solidandroid.module.DependencyInjector;
+
 import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
-import com.btellez.solidandroid.activity.MainUserActivity;
-import com.btellez.solidandroid.fragment.SimpleFragment;
-import com.btellez.solidandroid.module.DependencyInjector;
 
 public class SimpleAndroidApplication extends Application implements DependencyInjector {
 
@@ -42,7 +44,8 @@ public class SimpleAndroidApplication extends Application implements DependencyI
                 // Shared Modules should go under the ../Module package
                 new MainUserActivity.MainUserActivityModule(),
                 new SimpleFragment.SimpleFragmentModule(),
-                new ApplicationContextModule(this)
+                new ApplicationContextModule(this),
+                new SearchResultsActivity.SearchResultDepedencyModule()
         };
     }
 
