@@ -1,5 +1,6 @@
 package com.btellez.solidandroid.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.btellez.solidandroid.module.DependencyInjector;
 import com.btellez.solidandroid.module.SingletonModule;
 import com.btellez.solidandroid.network.NetworkBitmapClient;
 import com.btellez.solidandroid.network.NounProjectApi;
+import com.btellez.solidandroid.utility.Strings;
 import com.btellez.solidandroid.view.SingleIconResultItem;
 
 import java.util.List;
@@ -29,6 +31,10 @@ import butterknife.InjectView;
 import dagger.Module;
 
 public class SearchResultsActivity extends FragmentActivity {
+
+    private static final String EXTRA_QUERY_STRING = "extra_query_string";
+    private static final String ACTION_DISPLAY_SEARCH_RESULTS = "action_display_search_results";
+    private static final String ACTION_DISPLAY_RECENT_UPLOADS = "action_display_recent_uploads";
 
     @Inject NetworkBitmapClient networkBitmap;
     @Inject NounProjectApi nounProjectApi;
@@ -47,10 +53,44 @@ public class SearchResultsActivity extends FragmentActivity {
         ((DependencyInjector) getApplication()).inject(this);
 
         // Configure the activity
-        nounProjectApi.recent(new ApiCallback());
+
+        if (ACTION_DISPLAY_RECENT_UPLOADS.equals(getIntent().getAction())) {
+            nounProjectApi.recent(new ApiCallback());
+            setTitle(R.string.recent_uploads);
+        } else {
+            String query = getIntent().getStringExtra(EXTRA_QUERY_STRING);
+            nounProjectApi.search(query, new ApiCallback());
+            setTitle(getString(R.string.query_pattern, query));
+        }
+
         itemListener = new ViewListener();
         adapter = new IconListAdapter();
         listView.setAdapter(adapter);
+    }
+
+    public static class Builder {
+        String query;
+        Context context;
+
+        public Builder(Context context) {
+            this.context = context;
+        }
+
+        public Builder withSearchTerm(String query) {
+            this.query = query;
+            return this;
+        }
+
+        public Intent build() {
+            Intent intent = new Intent(context, SearchResultsActivity.class);
+            if (!Strings.isEmpty(query)) {
+                intent.setAction(ACTION_DISPLAY_SEARCH_RESULTS);
+                intent.putExtra(EXTRA_QUERY_STRING, query);
+            } else {
+                intent.setAction(ACTION_DISPLAY_RECENT_UPLOADS);
+            }
+            return intent;
+        }
     }
 
     private class ViewListener implements SingleIconResultItem.Listener {
@@ -101,7 +141,6 @@ public class SearchResultsActivity extends FragmentActivity {
             return listItem;
         }
     }
-
 
     private class ApiCallback implements NounProjectApi.Callback {
         @Override

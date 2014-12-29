@@ -1,5 +1,6 @@
 package com.btellez.solidandroid.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -17,12 +18,18 @@ public class SelectionActivity extends FragmentActivity {
         selectionScreenView.setListener(new SelectionScreenView.SimpleListener() {
             @Override
             public void onRecentGroupSelected() {
-                // TODO: Start Recent Group Activity
+                Intent intent = new SearchResultsActivity
+                                        .Builder(SelectionActivity.this)
+                                        .build();
+                startActivity(intent);
             }
 
             @Override
             public void onSubmitSearchQuery(String query) {
-                // TODO: Start Search Results Activity
+                Intent intent = new SearchResultsActivity
+                                        .Builder(SelectionActivity.this)
+                                        .withSearchTerm(query).build();
+                startActivity(intent);
             }
         });
     }

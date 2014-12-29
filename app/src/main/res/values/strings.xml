@@ -7,4 +7,5 @@
     <string name="search_hint">search…</string>
     <string name="keyword_search">Keyword Search</string>
     <string name="input_error">Search term must not be empty!</string>
+    <string name="query_pattern">Search: %s</string>
 </resources>
