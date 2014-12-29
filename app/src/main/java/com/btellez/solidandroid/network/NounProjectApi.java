@@ -11,7 +11,7 @@ public interface NounProjectApi {
 
     public static class EndpointBuilder {
         public String buildSearchUrl(Configuration config, String term) {
-            return config.getNounProjectBaseApiUrl() + "collection/" + term + "/icons";
+            return config.getNounProjectBaseUrl() + "/json_icon_list/" + term + "/?page=1&limit=100&offset=0";
         }
 
         public String buildRecentUrl(Configuration config) {

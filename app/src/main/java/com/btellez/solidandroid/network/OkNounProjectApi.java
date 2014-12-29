@@ -40,7 +40,7 @@ public class OkNounProjectApi implements  NounProjectApi {
     public void search(String term, final Callback callback) {
         String endpoint = new EndpointBuilder().buildSearchUrl(configuration, term);
         Request request = buildRequest(endpoint, NounProjectOAuth.RequestType.GET);
-        client.newCall(request).enqueue(new OkHttpCallback(callback, "icons"));
+        client.newCall(request).enqueue(new OkHttpCallback(callback));
     }
 
     @Override
@@ -71,6 +71,10 @@ public class OkNounProjectApi implements  NounProjectApi {
         public String dataKey;
         private Handler uiHandler = new Handler(Looper.getMainLooper());
 
+        private OkHttpCallback(Callback callback) {
+            this(callback, null);
+        }
+
         private OkHttpCallback(Callback callback, String dataKey) {
             this.callback = callback;
             this.dataKey = dataKey;
@@ -87,7 +91,8 @@ public class OkNounProjectApi implements  NounProjectApi {
         }
 
         @Override public void onResponse(final Response response) throws IOException {
-            final List<Icon> result = iconParser.fromJson(response.body().string(), dataKey);
+            String jsonString = response.body().string();
+            final List<Icon> result = iconParser.fromJson(jsonString, dataKey);
             // We need to post update to the UI thread.
             uiHandler.post(new Runnable() {
                 @Override
