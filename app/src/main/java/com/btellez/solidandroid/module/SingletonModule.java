@@ -2,6 +2,11 @@ package com.btellez.solidandroid.module;
 
 import android.content.Context;
 
+import com.btellez.solidandroid.configuration.Configuration;
+import com.btellez.solidandroid.model.IconParser;
+import com.btellez.solidandroid.network.NetworkBitmapClient;
+import com.btellez.solidandroid.network.NounProjectApi;
+import com.btellez.solidandroid.network.OkNounProjectApi;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -27,6 +32,23 @@ import com.btellez.solidandroid.SimpleAndroidApplication;
  */
 @Module(library = true, includes = SimpleAndroidApplication.ApplicationContextModule.class)
 public class SingletonModule {
+
+    @Provides @Singleton Configuration provideConfiguration(Context context) {
+        return new Configuration.DevelopmentConfiguration(context);
+    }
+
+    @Provides @Singleton IconParser provudeIconParser() {
+        return new IconParser.GsonIconParser();
+    }
+
+    @Provides @Singleton NounProjectApi provideNounProjectApi(Configuration configuration, IconParser parser) {
+        return new OkNounProjectApi(configuration, parser);
+    }
+
+
+    @Provides @Singleton NetworkBitmapClient provideNetworkBitmapClient() {
+        return new NetworkBitmapClient.PicassoBitmapClient();
+    }
 
     @Provides @Singleton Bus provideEventBus() {
         return new Bus();

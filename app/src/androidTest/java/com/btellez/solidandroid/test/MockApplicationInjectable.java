@@ -6,7 +6,8 @@ import android.content.Context;
 import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
-import com.btellez.solidandroid.module.DaggerInjector;
+
+import com.btellez.solidandroid.module.DependencyInjector;
 
 /**
  * This class defined standard behaviour that DaggerInjector needs, and provides an
@@ -15,7 +16,7 @@ import com.btellez.solidandroid.module.DaggerInjector;
  * Define the getModules() method in an anonymous inner-class implementation defined
  * within each Test, since not all modules will be required for all tests.
  */
-public abstract class MockApplicationInjectable extends Application implements DaggerInjector {
+public abstract class MockApplicationInjectable extends Application implements DependencyInjector {
 
     //region Application Context Module
     @Module(library = true)

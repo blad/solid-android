@@ -1,0 +1,128 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- Begin Selection Icons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/search_icon"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/solid_search"
+                    android:tint="@color/primary_dark"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/search_icon"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="@string/keyword_search"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="25sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/recent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/recent_icon"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/solid_upload"
+                    android:tint="@color/primary_dark"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recent_icon"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-20dp"
+                    android:gravity="center"
+                    android:text="@string/recent_uploads"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="25sp"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- Begin Search Overlay -->
+        <RelativeLayout
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/dark_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black_alpha"
+                />
+
+            <RelativeLayout
+                android:id="@+id/search_input_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <EditText
+                    android:id="@+id/search_input"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/icons"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/search_hint"
+                    android:textColor="@color/primary_text"
+                    android:textSize="40sp"
+                    android:maxLines="1"
+                    />
+
+                <ImageView
+                    android:id="@+id/submit"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/accent"
+                    android:src="@drawable/solid_search"
+                    android:padding="10dp"
+                    android:tint="@color/icons"
+                    android:layout_toRightOf="@id/search_input"
+                    android:layout_toEndOf="@id/search_input"
+                    android:layout_alignTop="@id/search_input"
+                    android:layout_alignBottom="@id/search_input"
+                    />
+
+                <TextView
+                    android:id="@+id/error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/search_input"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/accent"
+                    android:textSize="15sp"
+                    android:shadowColor="@color/icons"
+                    android:text="@string/input_error"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </FrameLayout>
+</ScrollView>
