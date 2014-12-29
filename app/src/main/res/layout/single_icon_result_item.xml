@@ -20,11 +20,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/icon"
         android:layout_marginTop="10dp"
-        android:background="#000"
+        android:background="@color/accent"
         android:gravity="left"
         android:padding="5dp"
         android:text="BREAD"
-        android:textColor="#dddddd"
+        android:textColor="@color/icons"
         android:textSize="20dp"
         />
 

@@ -83,6 +83,14 @@ public class SearchResultsActivity extends FragmentActivity {
             return position;
         }
         @Override
+        public boolean areAllItemsEnabled() {
+            return false;
+        }
+        @Override
+        public boolean isEnabled(int position) {
+            return false;
+        }
+        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             SingleIconResultItem listItem = (SingleIconResultItem) convertView;
             if (listItem == null) {
