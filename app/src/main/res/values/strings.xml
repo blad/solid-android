@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SOLID Android</string>
+    <string name="app_name">SOLID: Noun Project Browser</string>
     <string name="simple_string">Simple String…</string>
     <string name="action_settings">Settings</string>
+    <string name="recent_uploads">Recent Uploads</string>
+    <string name="search_hint">search…</string>
+    <string name="keyword_search">Keyword Search</string>
+    <string name="input_error">Search term must not be empty!</string>
 </resources>
