@@ -20,4 +20,6 @@
         <item>fill-in-development-secret</item> <!-- Development -->
         <item>fill-in-production-secret</item> <!-- Production -->
     </string-array>
+
+    <string name="noun_project_base_url">http://api.thenounproject.com/</string>
 </resources>
