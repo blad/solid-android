@@ -8,6 +8,7 @@ import com.btellez.solidandroid.model.ApiKeys;
 public interface Configuration {
     public ApiKeys getNounProjectApiKeys();
     public String getNounProjectBaseUrl();
+    public String getNounProjectBaseApiUrl();
 
     /**
      * Shared configuration settings for Release and Development.
@@ -17,6 +18,11 @@ public interface Configuration {
 
         protected BaseConfiguration(Context context) {
             this.context = context;
+        }
+
+        @Override
+        public String getNounProjectBaseApiUrl() {
+            return context.getString(R.string.noun_project_base_api_url);
         }
 
         @Override

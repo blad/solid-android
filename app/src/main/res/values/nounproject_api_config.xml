@@ -21,5 +21,6 @@
         <item>fill-in-production-secret</item> <!-- Production -->
     </string-array>
 
-    <string name="noun_project_base_url">http://api.thenounproject.com/</string>
+    <string name="noun_project_base_api_url">http://api.thenounproject.com/</string>
+    <string name="noun_project_base_url">http://www.thenounproject.com</string>
 </resources>

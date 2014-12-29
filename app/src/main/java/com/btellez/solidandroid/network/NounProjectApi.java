@@ -11,11 +11,11 @@ public interface NounProjectApi {
 
     public static class EndpointBuilder {
         public String buildSearchUrl(Configuration config, String term) {
-            return config.getNounProjectBaseUrl() + "collection/" + term + "/icons";
+            return config.getNounProjectBaseApiUrl() + "collection/" + term + "/icons";
         }
 
         public String buildRecentUrl(Configuration config) {
-            return config.getNounProjectBaseUrl() + "icons/recent_uploads";
+            return config.getNounProjectBaseApiUrl() + "icons/recent_uploads";
         }
     }
 
