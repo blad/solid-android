@@ -54,6 +54,11 @@ dependencies {
 
     // HTTP Library
     compile 'com.squareup.okhttp:okhttp:2.1.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
+
+
+    // Image Download Library
+    compile 'com.squareup.picasso:picasso:2.4.0'
 
     // Json Library
     compile 'com.google.code.gson:gson:2.3.1'
