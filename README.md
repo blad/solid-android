@@ -1,162 +1,90 @@
-Sample Android Project | Android Studio + Otto, Dagger and ButterKnife [!["Build Status"](https://travis-ci.org/blad/android-studio-example-project.svg?branch=master)](https://travis-ci.org/blad/android-studio-example-project)
-===================================================================================================================================================
+SOLID: Noun Project Browser
+============================
 
-This is a simple example project that makes use of:
+This project's goal is to be a demonstration of how [SOLID principles](http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29) can
+be applied to Android development.
+
+![SOLID: NounProject Preview](https://s3.amazonaws.com/uploads.hipchat.com/56587/750791/JJlLwUNKMeDJcOu/previews.png)]
+
+## Contributing
+
+Contributions are welcome to the project. The goal is to adhere to the SOLID principles.
+
+### Reporting Bugs & Bug Fixes
+
+If you find a bug you can report it by using the [issues section](https://github.com/blad/solid-android/issues) for this project. Bug fixes should also be done in pull requests.
+
+### Features & Feature Requests
+
+If there is some feature you want to implement, I invite you to do a pull request.
+
+Feature request should be reported in the [issues section](https://github.com/blad/solid-android/issues) for this project.
+
+## Tools & Libraries
 
 - [Android Studio - Android Development Environment](https://developer.android.com/sdk/installing/studio.html)
-- [Otto - Event Bus Library](http://square.github.io/otto/)
 - [ButterKnife - View Injection Library](http://jakewharton.github.io/butterknife/)
 - [Dagger - Dependency Injection Library](http://square.github.io/dagger/)
+- [Gogole Gson - A Java library to convert JSON to Java objects](https://code.google.com/p/google-gson/)
+- [okHttp - An HTTP & SPDY client for Android and Java applications](http://square.github.io/okhttp/)
+- [Picasso - A powerful image downloading and caching library for Android](http://square.github.io/picasso/)
+- [Otto - Event Bus Library](http://square.github.io/otto/)
 - [Travis CI - Continuos integration platform](https://travis-ci.org/)
 
-## Android Studio & Gradle
+## Graphics & Icons
 
-This project was developed in Android Studio and all build configurations are
-based on the Gradle Build System which is the newest standard for Android Projects.
+### The Noun Project
 
-### Setting up the project after cloning from a repository
+[The Noun Project](http://www.thenounproject.com) is the source for some the graphics used in this application. The following users' work was used:
+
+- [Dice](http://thenounproject.com/term/dice/20125/) created by [Derek Palladino](http://thenounproject.com/derekjp/)
+- [Cloud-Upload](http://thenounproject.com/term/cloud-upload/9947/) created by [Scott Lewis](http://thenounproject.com/iconify/)
+- [Magnifying-Glass](http://thenounproject.com/term/magnifying-glass/89626/) public domain icon
+
+The noun project is a great resource for finding clip art for use in applications.
+
+### Android Asset Studio
+
+Icon generator that allows you to quickly and easily generate icons from existing source images, clipart, or text. You can generate Launcher icons, Action bar and tab icons,  Notification icons and Generic icons. The asset studio allows you to adjust sizing, padding, and tint icons.
+
+[Android Asset Studio](http://romannurik.github.io/AndroidAssetStudio/)
+
+### Material Palette
+
+Material Pallet is a simple web app that allows you to generate a color
+pallet and export the corresponding xml. This allows non-designers to pick a pallet
+that makes sense visually, and aligns with the guidelines for Material Design.
+
+Additionally this helps enforce the correct use of color names in Android themes.
+
+[www.MaterialPalette.com](http://www.materialpalette.com/)
+
+## Running this Project
 
 From Android Studio simply choose to import and select the `build.gradle` in the
 root directory of the repository. Android Studio will set everything else up
 automatically.
 
-### Summary of Dependencies
+### The Noun Project API Keys
 
-The dependencies are all declared in terms of **Group ID**, **Artifact ID**, and
-**Version** number in `app/build.gradle`. The dependencies will then be downloaded
-from [Maven Central](http://search.maven.org/) or [BinTray](https://bintray.com/).
+To obtain api keys for The Noun Project visit the [Getting Started](http://api.thenounproject.com/getting_started.html) page for additional information
 
-The downloaded dependencies will be available automatically as part of the project.
-
-Jar file dependencies can also be included. The configuration for this project
-looks inside `app/libs` for `*.jar` files and includes them for all build types.
+Once you have the API key and secret, replace the placeholder values in: `app/src/main/res/values/nounproject_api_config.xml`.
 
 
-*Example Dependency Declarations:*
-```
-dependencies {
-    compile 'com.squareup:otto:1.3.5' // Event Bus Library
-    // Group ID: com.squareup
-    // Artifact ID: otto
-    // Version: 1.3.5, can also specify minimum version via plus symbol eg:1.3.+
 
-    // Include Any jar dependencies
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+## License
 
-    // Include only for Android Tests
-    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.1'
-    //... more dependencies
-}
-```
-
-
-## Otto: Event Bus Library
-[Otto](http://square.github.io/otto/) is an event bus library that aims to provide
-a mechanism for components in an Android application to remain decoupled, while
-still being able to communicate effectively.
-
-### How Otto Works
-Otto provides a `@Subscribe` annotation that allows instances to subscribe to a
-posts of a particular type, which are specified by the function parameters type.
-
-The following function will react to posts of type `CustomEventABC`
-```Java
-  //... inside some class
-  @Subscribe public void onCustomEventOccurred(CustomEventABC event) {
-    // ... do something magical
-  }  
-```
-
-Where the class `CustomEventABC` is defined as:
-
-```
-class CustomEventABC {
-  // ... Some Magical Custom Implementation, No Base Class Needed
-}
-```
-
-And the method above annotated with `@Subscribe` is invoked after a call to:
-```
-  busInstance = BusFactory.getInstance(); // Roll Your Own Singleton to Share a Bus
-  busInstance.post(new CustomEventABC());
-```
-
-This allows your components to communicate via a single instance of a `Bus`, or have
-a set of components communicate via their own `Bus`'s.
-
-**This reduces the need for a components to define interfaces to communicate,
-bus will pass the posted objects to all subscribers expecting that object type.**
-
-It is common to want to have any new subscribers receive the last broadcast object,
-for that there is the `@Produce` annotation. It must simply return the type of object
-which we want to produce for the new subscriber.
-
-```
-  //... in some class
-  @Produce public CustomEventABC produceLastCustomEventABC() {
-    // If this held a value, it would hold the same value as the last posted
-    // message of this type.
-    return new CustomEventABC();
-  }
-```
-
-All Subscribers and Producers must register themselves via the `register` method,
-and can unregister themselves via the `unregister` method.
-
-### How Otto Works in This Sample Project
-This project uses Otto to communicate between fragments, and uses the containing
-activity as the "Producer" for any new subscribers.
-
-The Container Activity and Fragments register themselves with Otto, and when a
-button is clicked in the fragment we `post` an object we defined to the Bus.
-
-## Butter Knife View Injection
-
-[Butter Knife](http://jakewharton.github.io/butterknife/) is a view injector library
-that generates boilerplate that is normally associated with assigning view references
-to variables.
-
-### How Butter Knife Works
-The simplest way to use Butter Knife is to use the `@InjectView` annotation
-before a variable that would normally store a reference to a view object, and then
-call the `ButterKnife.inject` method to inject views into the class.
-
-*Simple Example of Using View Injection; Simply use `ButterKnife.inject` where
-`findViewById` would normally be used.*
-```
-class SimpleActivity extends Activity {
-  @InjectView(R.id.title) TextView title;
-  @InjectView(R.id.subtitle) TextView subtitle;
-  @InjectView(R.id.footer) TextView footer;
-
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.simple_activity);
-    ButterKnife.inject(this);
-    // Injected Views Ready for Use after This Point...
-  }
-}
-```
-
-Butter Knife does code generation at compile time, so there is no use of reflection
-at RunTime.
-
-More code examples can be found at: [jakewharton.github.io/butterknife/](http://jakewharton.github.io/butterknife/)
-
-### How This Sample Project Uses Butter Knife
-
-The use of ButterKnife in this sample project is very minimal, it is used to inject
-views into Fragments, and although the gain is not apparent in this example,
-large project could potentially benefit from it's use.
-
-## Dagger Dependency Injector
-
-### About Dependency Injection
-
-### How This Sample Project Uses Dagger
-
-## Continuous Integration
-
-### TravisCI && CircleCI
-
-### Jenkins CI
+> Copyright 2014 Bladymir Tellez
+>
+> Licensed under the Apache License, Version 2.0 (the "License");
+> you may not use this file except in compliance with the License.
+> You may obtain a copy of the License at
+>
+> http://www.apache.org/licenses/LICENSE-2.0
+>
+> Unless required by applicable law or agreed to in writing, software
+> distributed under the License is distributed on an "AS IS" BASIS,
+> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> See the License for the specific language governing permissions and
+> limitations under the License.
