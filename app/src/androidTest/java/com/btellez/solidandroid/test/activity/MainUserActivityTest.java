@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import android.util.Log;
 
+import com.btellez.solidandroid.module.DependencyInjector;
 import com.google.gson.JsonObject;
 import com.squareup.otto.Bus;
 
@@ -20,7 +21,6 @@ import dagger.Module;
 import dagger.Provides;
 import com.btellez.solidandroid.activity.MainUserActivity;
 import com.btellez.solidandroid.fragment.SimpleFragment;
-import com.btellez.solidandroid.module.DaggerInjector;
 import com.btellez.solidandroid.network.SimpleApi;
 import com.btellez.solidandroid.test.MockApplicationInjectable;
 import com.btellez.solidandroid.test.module.SingletonTestModule;
@@ -94,7 +94,7 @@ public class MainUserActivityTest extends ActivityUnitTestCase<MainUserActivity>
             }
         };
 
-        ((DaggerInjector) mApplication).inject(this); // Inject self dependencies
+        ((DependencyInjector) mApplication).inject(this); // Inject self dependencies
 
         setApplication(mApplication); // Specify modules and initialize object graph
         setActivityContext(mContext);

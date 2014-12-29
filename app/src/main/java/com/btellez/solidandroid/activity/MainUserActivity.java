@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.btellez.solidandroid.module.DependencyInjector;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
@@ -15,7 +16,6 @@ import javax.inject.Inject;
 import dagger.Module;
 import dagger.Provides;
 import com.btellez.solidandroid.fragment.SimpleFragment;
-import com.btellez.solidandroid.module.DaggerInjector;
 import com.btellez.solidandroid.module.SingletonModule;
 import com.btellez.solidandroid.network.SimpleApi;
 import com.btellez.solidandroid.R;
@@ -44,7 +44,7 @@ public class MainUserActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((DaggerInjector) getApplication()).inject(this); // Dagger Injection
+        ((DependencyInjector) getApplication()).inject(this); // Dagger Injection
 
         Log.e(TAG, "Event Bus Object" + eventBus.toString() + eventBus.hashCode());
         setContentView(R.layout.activity_main_user);

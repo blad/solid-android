@@ -8,9 +8,9 @@ import dagger.ObjectGraph;
 import dagger.Provides;
 import com.btellez.solidandroid.activity.MainUserActivity;
 import com.btellez.solidandroid.fragment.SimpleFragment;
-import com.btellez.solidandroid.module.DaggerInjector;
+import com.btellez.solidandroid.module.DependencyInjector;
 
-public class SimpleAndroidApplication extends Application implements DaggerInjector {
+public class SimpleAndroidApplication extends Application implements DependencyInjector {
 
     //region Application Context Module
     @Module(library = true)

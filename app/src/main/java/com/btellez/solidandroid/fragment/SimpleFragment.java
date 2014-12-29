@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.btellez.solidandroid.module.DependencyInjector;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -21,7 +22,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import dagger.Module;
 import hugo.weaving.DebugLog;
-import com.btellez.solidandroid.module.DaggerInjector;
+
 import com.btellez.solidandroid.module.SingletonModule;
 import com.btellez.solidandroid.R;
 
@@ -44,7 +45,7 @@ public class SimpleFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((DaggerInjector) activity.getApplication()).inject(this); // Dagger Injection
+        ((DependencyInjector) activity.getApplication()).inject(this); // Dagger Injection
         Log.e(TAG, "Event Bus Object"+ eventBus.toString() + eventBus.hashCode());
     }
 
