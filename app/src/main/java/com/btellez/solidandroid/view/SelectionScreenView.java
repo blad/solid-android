@@ -149,6 +149,7 @@ public class SelectionScreenView extends FrameLayout {
 
         fadeOut(overlayBackground, 500, 0, null);
         fadeOut(searchInputGroup, 250, 200, onAnimationEnd);
+        setError(0);
     }
 
     private void fadeOut(View view, long duration, long delay, Animator.AnimatorListener animatorListener) {
@@ -163,6 +164,8 @@ public class SelectionScreenView extends FrameLayout {
     }
 
     private void fadeIn(View view, long duration, long delay) {
+        view.setAlpha(0);
+        view.setVisibility(VISIBLE);
         ObjectAnimator objectAnimator= ObjectAnimator.ofFloat(view, "alpha", 0, 1.0f);
         objectAnimator.setDuration(duration);
         objectAnimator.setStartDelay(delay);

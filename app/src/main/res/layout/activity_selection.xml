@@ -93,6 +93,7 @@
                     android:hint="@string/search_hint"
                     android:textColor="@color/primary_text"
                     android:textSize="40sp"
+                    android:maxLines="1"
                     />
 
                 <ImageView
@@ -119,7 +120,8 @@
                     android:textColor="@color/accent"
                     android:textSize="15sp"
                     android:shadowColor="@color/icons"
-                    android:text="@string/input_error"/>
+                    android:text="@string/input_error"
+                    android:visibility="invisible"/>
             </RelativeLayout>
         </RelativeLayout>
     </FrameLayout>
