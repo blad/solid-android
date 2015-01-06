@@ -8,6 +8,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -86,7 +87,7 @@ public class SelectionScreenView extends FrameLayout {
     private void init(Context context) {
         inflate(context, R.layout.activity_selection, this);
         ButterKnife.inject(this);
-//        setState(State.ShowSelection);
+        setState(State.ShowSelection);
     }
 
     @OnClick(R.id.dark_background)
@@ -130,26 +131,40 @@ public class SelectionScreenView extends FrameLayout {
 
     @DebugLog
     private void showOverlay() {
-        if (overlay.getVisibility() == VISIBLE) return;
-        overlay.setVisibility(VISIBLE);
-        fadeIn(overlayBackground, 250, 0);
-        fadeIn(searchInputGroup, 500, 200);
+        if (!isVisible(overlay)) {
+            overlay.setVisibility(VISIBLE);
+            fadeIn(overlayBackground, 250, 0);
+            fadeIn(searchInputGroup, 500, 200);
+
+            // Show Keyboard:
+            searchInput.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInputFromWindow(searchInput.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+        }
     }
 
     @DebugLog
     private void hideOverlay() {
-        if (overlay.getVisibility() != VISIBLE) return;
+        if (isVisible(overlay)) {
+            Animator.AnimatorListener onAnimationEnd = new SimpleAnimatorListener() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    overlay.setVisibility(INVISIBLE);
+                }
+            };
+            fadeOut(overlayBackground, 500, 0, null);
+            fadeOut(searchInputGroup, 250, 200, onAnimationEnd);
+            setError(0);
 
-        Animator.AnimatorListener onAnimationEnd =  new SimpleAnimatorListener() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                overlay.setVisibility(INVISIBLE);
-            }
-        };
-
-        fadeOut(overlayBackground, 500, 0, null);
-        fadeOut(searchInputGroup, 250, 200, onAnimationEnd);
-        setError(0);
+            // Hide Keyboard:
+            searchInput.clearFocus();
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
+        }
+    }
+    
+    private boolean isVisible(View view) {
+        return view.getVisibility() == VISIBLE;
     }
 
     private void fadeOut(View view, long duration, long delay, Animator.AnimatorListener animatorListener) {
@@ -176,7 +191,6 @@ public class SelectionScreenView extends FrameLayout {
     private void setError(int resString) {
         if (resString == 0) {
             fadeOut(error, 250, 0, null);
-            return;
         } else {
             error.setText(resString);
             fadeIn(error, 250, 0);
