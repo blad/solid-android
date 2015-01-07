@@ -8,29 +8,27 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/headline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:textColor="@color/primary_light"
-        android:textSize="30sp"
-        tools:text="Something Unexpected Happened"/>
-
-    <TextView
         android:id="@+id/subheadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/headline"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:padding="10dp"
         android:textColor="@color/accent"
         android:textSize="15sp"
         tools:text="Looks like we are not able to load data at this time, check your connection and try again."/>
+    
+    <TextView
+        android:id="@+id/headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/subheadline"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/primary_light"
+        android:textSize="30sp"
+        tools:text="Something Unexpected Happened"/>
 
     <Button
         android:id="@+id/primary_action"
