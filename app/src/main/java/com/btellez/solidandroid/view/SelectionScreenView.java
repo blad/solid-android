@@ -1,13 +1,11 @@
 package com.btellez.solidandroid.view;
 
 import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -120,11 +118,13 @@ public class SelectionScreenView extends FrameLayout {
     private void setState(State state) {
         switch (state) {
             case ShowSelection:
+                setKeyboardVisibility(View.GONE);
                 hideOverlay();
                 break;
             case ShowOverlay:
                 showOverlay();
-                setError(0);
+                resetError();
+                setKeyboardVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -132,75 +132,55 @@ public class SelectionScreenView extends FrameLayout {
     @DebugLog
     private void showOverlay() {
         if (!isVisible(overlay)) {
-            overlay.setVisibility(VISIBLE);
-            fadeIn(overlayBackground, 250, 0);
-            fadeIn(searchInputGroup, 500, 200);
-
-            // Show Keyboard:
-            searchInput.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInputFromWindow(searchInput.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+            new FadeAnimator()
+                    .fadeIn(overlay, 0, 0)
+                    .fadeIn(overlayBackground, 250, 0)
+                    .fadeIn(searchInputGroup, 500, 200)
+                    .start();
         }
     }
 
     @DebugLog
     private void hideOverlay() {
         if (isVisible(overlay)) {
-            Animator.AnimatorListener onAnimationEnd = new SimpleAnimatorListener() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    overlay.setVisibility(INVISIBLE);
-                }
-            };
-            fadeOut(overlayBackground, 500, 0, null);
-            fadeOut(searchInputGroup, 250, 200, onAnimationEnd);
-            setError(0);
+            new FadeAnimator()
+                    .withListener(new FadeAnimator.SimpleAnimatorListener() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            overlay.setVisibility(INVISIBLE);
+                        }
+                    })
+                    .fadeOut(overlayBackground, 500, 0)
+                    .fadeOut(searchInputGroup, 250, 200)
+                    .start();
+        }
+    }
 
-            // Hide Keyboard:
+    private void setKeyboardVisibility(int visiblity) {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (visiblity == View.VISIBLE) {
+            searchInput.requestFocus();
+            imm.toggleSoftInputFromWindow(searchInput.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+        } else {
             searchInput.clearFocus();
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
         }
     }
-    
+
     private boolean isVisible(View view) {
         return view.getVisibility() == VISIBLE;
     }
 
-    private void fadeOut(View view, long duration, long delay, Animator.AnimatorListener animatorListener) {
-        ObjectAnimator objectAnimator= ObjectAnimator.ofFloat(view, "alpha", 1.0f, 0f);
-        objectAnimator.setDuration(duration);
-        objectAnimator.setStartDelay(delay);
-        objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        if (animatorListener!=null) {
-            objectAnimator.addListener(animatorListener);
-        }
-        objectAnimator.start();
-    }
-
-    private void fadeIn(View view, long duration, long delay) {
-        view.setAlpha(0);
-        view.setVisibility(VISIBLE);
-        ObjectAnimator objectAnimator= ObjectAnimator.ofFloat(view, "alpha", 0, 1.0f);
-        objectAnimator.setDuration(duration);
-        objectAnimator.setStartDelay(delay);
-        objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        objectAnimator.start();
+    private void resetError() {
+        new FadeAnimator()
+                .fadeOut(error, 250, 0)
+                .start();
     }
 
     private void setError(int resString) {
-        if (resString == 0) {
-            fadeOut(error, 250, 0, null);
-        } else {
-            error.setText(resString);
-            fadeIn(error, 250, 0);
-        }
-    }
-
-    private class SimpleAnimatorListener implements Animator.AnimatorListener {
-        @Override public void onAnimationStart(Animator animation) {}
-        @Override public void onAnimationEnd(Animator animation) {}
-        @Override public void onAnimationCancel(Animator animation) {}
-        @Override public void onAnimationRepeat(Animator animation) {}
+        error.setText(resString);
+        new FadeAnimator()
+                .fadeIn(error, 250, 0)
+                .start();
     }
 }
