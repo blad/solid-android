@@ -8,4 +8,15 @@
     <string name="keyword_search">Keyword Search</string>
     <string name="input_error">Search term must not be empty!</string>
     <string name="query_pattern">Search: %s</string>
+    <string name="unable_to_load">Unable to Load Data</string>
+    <string name="unable_to_load_detail">We were unable to successfully fetch
+        items form The Noun Project. Please check your connection and try again.
+    </string>
+    <string name="try_again">Retry</string>
+    <string name="go_back">Go Back</string>
+    <string name="no_results">Sorry Nothing Found for Search Term</string>
+    <string name="no_results_detail">No results were returned for the
+        given term. Try a different search term.
+    </string>
+    <string name="change_search">Change Term</string>
 </resources>

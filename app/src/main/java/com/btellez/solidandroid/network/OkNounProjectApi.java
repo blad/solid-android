@@ -6,6 +6,7 @@ import android.os.Looper;
 import com.btellez.solidandroid.configuration.Configuration;
 import com.btellez.solidandroid.model.Icon;
 import com.btellez.solidandroid.model.IconParser;
+import com.google.gson.JsonParseException;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -66,7 +67,7 @@ public class OkNounProjectApi implements  NounProjectApi {
      * is not tied to okHttp, but to out own Callback, this decouples
      * the our app from OkHttp.
      */
-    private class OkHttpCallback implements  com.squareup.okhttp.Callback {
+    private class OkHttpCallback implements com.squareup.okhttp.Callback {
         public Callback callback;
         public String dataKey;
         private Handler uiHandler = new Handler(Looper.getMainLooper());
@@ -91,16 +92,24 @@ public class OkNounProjectApi implements  NounProjectApi {
         }
 
         @Override public void onResponse(final Response response) throws IOException {
-            String jsonString = response.body().string();
-            final List<Icon> result = iconParser.fromJson(jsonString, dataKey);
-            // We need to post update to the UI thread.
-            uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
+            try {
+                String jsonString = response.body().string();
+                final List<Icon> result = iconParser.fromJson(jsonString, dataKey);
+                // We need to post update to the UI thread.
+                uiHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
                         callback.onSuccess(result);
-                }
-            });
-
+                    }
+                });
+            } catch (final JsonParseException nonJsonResponse) {
+                uiHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onFailure(nonJsonResponse);
+                    }
+                });
+            }
         }
     }
 }

@@ -73,6 +73,22 @@ public class EmptyView extends FrameLayout {
             listener = new SimpleListener();
         this.listener = listener;
     }
+    
+    public void setPrimaryActionName(int resString) {
+        setPrimaryActionName(getResources().getString(resString));
+    }
+    
+    public void setPrimaryActionName(String value) {
+        buttonPrimary.setText(value);
+    }
+    
+    public void setSecondaryActionName(int resString) {
+        setSecondaryActionName(getResources().getString(resString));
+    }
+    
+    public void setSecondaryActionName(String value) {
+        buttonSecondary.setText(value);
+    }
 
     private void init(Context context) {
         inflate(context, R.layout.error_view, this);
@@ -85,7 +101,7 @@ public class EmptyView extends FrameLayout {
         listener.onPrimaryActionClicked();
     }
 
-    @OnClick(R.id.primary_action)
+    @OnClick(R.id.secondary_action)
     protected void onSecondaryActionClicked() {
         listener.onSecondaryActionClicked();
     }
