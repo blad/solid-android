@@ -133,9 +133,9 @@ public class SelectionScreenView extends FrameLayout {
     private void showOverlay() {
         if (!isVisible(overlay)) {
             new FadeAnimator()
-                    .fadeIn(overlay, 0, 0)
-                    .fadeIn(overlayBackground, 250, 0)
-                    .fadeIn(searchInputGroup, 500, 200)
+                    .show(overlay, 0, 0)
+                    .show(overlayBackground, 250, 0)
+                    .show(searchInputGroup, 500, 200)
                     .start();
         }
     }
@@ -144,14 +144,14 @@ public class SelectionScreenView extends FrameLayout {
     private void hideOverlay() {
         if (isVisible(overlay)) {
             new FadeAnimator()
-                    .withListener(new FadeAnimator.SimpleAnimatorListener() {
+                    .hide(overlayBackground, 500, 0)
+                    .hide(searchInputGroup, 250, 200)
+                    .withHideListener(new FadeAnimator.SimpleAnimatorListener() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             overlay.setVisibility(INVISIBLE);
                         }
                     })
-                    .fadeOut(overlayBackground, 500, 0)
-                    .fadeOut(searchInputGroup, 250, 200)
                     .start();
         }
     }
@@ -173,14 +173,14 @@ public class SelectionScreenView extends FrameLayout {
 
     private void resetError() {
         new FadeAnimator()
-                .fadeOut(error, 250, 0)
+                .hide(error, 250, 0)
                 .start();
     }
 
     private void setError(int resString) {
         error.setText(resString);
         new FadeAnimator()
-                .fadeIn(error, 250, 0)
+                .show(error, 250, 0)
                 .start();
     }
 }
