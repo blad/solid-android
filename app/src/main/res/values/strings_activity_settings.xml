@@ -1,0 +1,14 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_key_enable_notifications">pref_key_enable_notifications</string>
+    <string name="pref_enable_notifications">Enable notifications</string>
+    <string name="pref_enable_notifications_description">Enables notification for watched search results</string>
+
+    <string name="pref_key_enable_auto_complete">pref_key_enable_auto_complete</string>
+    <string name="pref_enable_auto_complete">Enable auto-complete suggestions</string>
+    <string name="pref_enable_auto_complete_description">Enables auto-complete suggestions while typing a search term</string>
+
+    <string name="pref_key_enable_history">pref_key_enable_history</string>
+    <string name="pref_enable_history">Enables search history</string>
+    <string name="pref_enable_history_description">Enables search history for every search constructed</string>
+</resources>

@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/title_activity_settings"
+        >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_enable_notifications"
+            android:summary="@string/pref_enable_notifications_description"
+            android:title="@string/pref_enable_notifications"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_enable_auto_complete"
+            android:summary="@string/pref_enable_auto_complete_description"
+            android:title="@string/pref_enable_auto_complete"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_enable_history"
+            android:summary="@string/pref_enable_history_description"
+            android:title="@string/pref_enable_history"/>
+    </PreferenceCategory>
+</PreferenceScreen>
