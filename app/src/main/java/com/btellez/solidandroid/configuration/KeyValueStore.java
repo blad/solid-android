@@ -25,6 +25,10 @@ public interface KeyValueStore {
     public String getString(String key);
 
     public void putString(String key, String value);
+    
+    public boolean getBool(String key);
+    
+    public void putBool(String key, boolean value);
 
 
     /**
@@ -42,6 +46,8 @@ public interface KeyValueStore {
         @Override public String getString(String key, String defaultValue) {return null;}
         @Override public String getString(String key) {return null;}
         @Override public void putString(String key, String value) {}
+        @Override public boolean getBool(String key) {return false;}
+        @Override public void putBool(String key, boolean value) {}
     }
 
     /**
@@ -84,6 +90,16 @@ public interface KeyValueStore {
         @Override
         public void putString(String key, String value) {
             prefs.edit().putString(key, value).apply();
+        }
+
+        @Override
+        public boolean getBool(String key) {
+            return prefs.getBoolean(key, false);
+        }
+
+        @Override
+        public void putBool(String key, boolean value) {
+            prefs.edit().putBoolean(key, value).apply();
         }
 
         @Override
@@ -136,6 +152,16 @@ public interface KeyValueStore {
 
         @Override
         public void putString(String key, String value) {
+            map.put(key, value);
+        }
+
+        @Override
+        public boolean getBool(String key) {
+            return map.containsKey(key) && (boolean) map.get(key);
+        }
+
+        @Override
+        public void putBool(String key, boolean value) {
             map.put(key, value);
         }
     }
