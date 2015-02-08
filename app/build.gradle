@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         testApplicationId "com.btellez.solidandroid.test"
-        testInstrumentationRunner "com.btellez.solidandroid.test.SimpleApplicationInstrumentationTestRunner"
+        testInstrumentationRunner "com.btellez.solidandroid.test.SolidInstrumentationTestRunner"
         testHandleProfiling true
         testFunctionalTest true
 

@@ -18,6 +18,13 @@ public class DeserializeTest extends InstrumentationTestCase {
         assertEquals(72, icons.size());
     }
 
+    /**
+     * Helper method for instrumentation test to load asset serialized objects
+     * from the assets directory.
+     * *
+     * @param fileName
+     * @return
+     */
     private String readFileFromAssets(String fileName) {
         try {
             InputStream is = getInstrumentation().getContext().getAssets().open(fileName);
