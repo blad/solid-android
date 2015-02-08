@@ -18,7 +18,6 @@ import com.btellez.solidandroid.utility.Strings;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import hugo.weaving.DebugLog;
 
 public class SelectionScreenView extends FrameLayout {
 
@@ -114,7 +113,6 @@ public class SelectionScreenView extends FrameLayout {
         }
     }
 
-    @DebugLog
     private void setState(State state) {
         switch (state) {
             case ShowSelection:
@@ -129,7 +127,6 @@ public class SelectionScreenView extends FrameLayout {
         }
     }
 
-    @DebugLog
     private void showOverlay() {
         if (!isVisible(overlay)) {
             new FadeAnimator()
@@ -140,7 +137,6 @@ public class SelectionScreenView extends FrameLayout {
         }
     }
 
-    @DebugLog
     private void hideOverlay() {
         if (isVisible(overlay)) {
             new FadeAnimator()

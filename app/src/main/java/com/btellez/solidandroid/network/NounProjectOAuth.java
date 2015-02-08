@@ -15,8 +15,6 @@ import java.util.List;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import hugo.weaving.DebugLog;
-
 /**
  * Based on OAuth Implementation on TheNounProject Api Explorer:
  * http://api.thenounproject.com/lib/oauth-1.0a.js
@@ -46,7 +44,6 @@ public class NounProjectOAuth {
         return this;
     }
 
-    @DebugLog
     public String getOAuthHeader() {
         assertReady(endpoint, requestType);
         List<Pair<String, String>> oAuthHeaderList = new ArrayList<Pair<String, String>>();
@@ -67,7 +64,6 @@ public class NounProjectOAuth {
         }
     }
 
-    @DebugLog
     private String getOAuthheaderString(List<Pair<String, String>> headerList) {
         StringBuffer sb = new StringBuffer();
         for (Pair<String, String> headers : headerList) {
@@ -76,7 +72,6 @@ public class NounProjectOAuth {
         return sb.subSequence(0, sb.length()-2).toString(); // trim extra space and comma.;
     }
 
-    @DebugLog
     protected String computeSignature(List<Pair<String, String>> headerList) {
         String baseString = requestType.name().toUpperCase() + AMP;
         baseString += encode(endpoint) + AMP;
@@ -84,7 +79,6 @@ public class NounProjectOAuth {
         return calculateHMACSHA1(getSignatureKey(), baseString);
     }
 
-    @DebugLog
     private String getParamString(List<Pair<String, String>> headerList) {
         StringBuffer paramsString = new StringBuffer();
         for (Pair<String, String> set : headerList) {
@@ -96,13 +90,10 @@ public class NounProjectOAuth {
 
     // Utility Methods
 
-    @DebugLog
     private String getSignatureKey() {
         return encode(keys.getSecret()) + AMP;
     }
 
-
-    @DebugLog
     private String getNounce(int length) {
         String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder result = new StringBuilder(32);
@@ -113,12 +104,10 @@ public class NounProjectOAuth {
         return result.toString();
     }
 
-    @DebugLog
     private String encode(String s) {
         return Uri.encode(s);
     }
 
-    @DebugLog
     private List<Pair<String, String>> sortOAuthHeaderParams(List<Pair<String, String>> headerList) {
         Collections.sort(headerList, new Comparator<Pair<String, String>>() {
             @Override
@@ -129,7 +118,6 @@ public class NounProjectOAuth {
         return headerList;
     }
 
-    @DebugLog
     public String calculateHMACSHA1(String key, String data)
     {
         try {
