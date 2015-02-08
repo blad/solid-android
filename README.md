@@ -1,10 +1,10 @@
-SOLID: Noun Project Browser
+SOLID: Noun Project Browser [![Build Status](https://travis-ci.org/blad/solid-android.svg?branch=master)](https://travis-ci.org/blad/solid-android)
 ============================
 
 This project's goal is to be a demonstration of how [SOLID principles](http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29) can
 be applied to Android development.
 
-![SOLID: NounProject Preview](https://s3.amazonaws.com/uploads.hipchat.com/56587/750791/JJlLwUNKMeDJcOu/previews.png)]
+![SOLID: NounProject Preview](https://s3.amazonaws.com/uploads.hipchat.com/56587/750791/JJlLwUNKMeDJcOu/previews.png)
 
 ## Contributing
 
