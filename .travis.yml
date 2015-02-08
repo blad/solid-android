@@ -1,3 +1,6 @@
 language: android
+cache:
+  directories:
+  - $HOME/.gradle/caches/
 
 script: ./gradlew build assembleDebug
