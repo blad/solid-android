@@ -21,6 +21,7 @@ import com.btellez.solidandroid.module.SingletonModule;
 import com.btellez.solidandroid.network.NetworkBitmapClient;
 import com.btellez.solidandroid.network.NounProjectApi;
 import com.btellez.solidandroid.utility.Strings;
+import com.btellez.solidandroid.utility.Tracker;
 import com.btellez.solidandroid.view.EmptyView;
 import com.btellez.solidandroid.view.SearchResultsView;
 import com.btellez.solidandroid.view.SingleIconResultItem;
@@ -41,6 +42,7 @@ public class SearchResultsActivity extends FragmentActivity {
     @Inject NetworkBitmapClient networkBitmap;
     @Inject NounProjectApi nounProjectApi;
     @Inject Configuration configuration;
+    @Inject Tracker tracker;
 
     protected List<Icon> data;
     protected BaseAdapter adapter;
@@ -79,15 +81,18 @@ public class SearchResultsActivity extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    
     private EmptyView.Listener getEmptyActionListener() {
         return new EmptyView.Listener() {
             @Override
             public void onPrimaryActionClicked() {
+                tracker.track("Empty Action Clicked", "button", "primary");
                 finish();
             }
 
             @Override
             public void onSecondaryActionClicked() {
+                tracker.track("Empty Action Clicked", "button", "secondary");
                 finish();
             }
         };
@@ -97,12 +102,14 @@ public class SearchResultsActivity extends FragmentActivity {
         return new EmptyView.Listener() {
             @Override
             public void onPrimaryActionClicked() {
+                tracker.track("Error Action Clicked", "button", "primary");
                 executeIntentAction();
                 contentView.setState(SearchResultsView.State.Loading);
             }
 
             @Override
             public void onSecondaryActionClicked() {
+                tracker.track("Error Action Clicked", "button", "secondary");
                 finish();
             }
         };
@@ -147,6 +154,7 @@ public class SearchResultsActivity extends FragmentActivity {
     private class ViewListener implements SingleIconResultItem.Listener {
         @Override
         public void onLinkClicked(String path) {
+            tracker.track("Icon Selected", "icon", path);
             String finalUrl = configuration.getNounProjectBaseUrl() + path;
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(finalUrl));
             startActivity(intent);
@@ -199,10 +207,12 @@ public class SearchResultsActivity extends FragmentActivity {
             data = icons;
             adapter.notifyDataSetChanged();
             contentView.setState(SearchResultsView.State.Loaded);
+            tracker.track("Success Load", "count", String.valueOf(icons.size()));
         }
 
         @Override
         public void onFailure(Throwable error) {
+            tracker.track("Failed Load", "error", error.toString());
             boolean isSearch = !ACTION_DISPLAY_RECENT_UPLOADS.equals(getIntent().getAction());
             boolean isNoResultJson = error instanceof JsonSyntaxException;
             if (isSearch && isNoResultJson) {

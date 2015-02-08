@@ -2,11 +2,13 @@ package com.btellez.solidandroid.module;
 
 import android.content.Context;
 
+import com.btellez.solidandroid.BuildConfig;
 import com.btellez.solidandroid.configuration.Configuration;
 import com.btellez.solidandroid.model.IconParser;
 import com.btellez.solidandroid.network.NetworkBitmapClient;
 import com.btellez.solidandroid.network.NounProjectApi;
 import com.btellez.solidandroid.network.OkNounProjectApi;
+import com.btellez.solidandroid.utility.Tracker;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -45,7 +47,6 @@ public class SingletonModule {
         return new OkNounProjectApi(configuration, parser);
     }
 
-
     @Provides @Singleton NetworkBitmapClient provideNetworkBitmapClient() {
         return new NetworkBitmapClient.PicassoBitmapClient();
     }
@@ -54,9 +55,15 @@ public class SingletonModule {
         return new Bus();
     }
 
-    // The parameter to this provider indicates that SimpleApi has a dependency on Bus.
-    // This dependency will be resolved automatically by Dagger upon injection.
     @Provides @Singleton SimpleApi provideSimpleApi(Bus bus, Context context) {
         return new SimpleApi(bus, context);
+    }
+
+    @Provides @Singleton Tracker provideTracker(Context context, Configuration appConfig) {
+        if (BuildConfig.DEBUG) {
+            return new Tracker.SimpleTracker();
+        } else {
+            return new Tracker.ReplayTracker(context, appConfig);
+        }
     }
 }

@@ -8,15 +8,24 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.btellez.solidandroid.R;
+import com.btellez.solidandroid.module.DependencyInjector;
+import com.btellez.solidandroid.module.SingletonModule;
+import com.btellez.solidandroid.utility.Tracker;
 import com.btellez.solidandroid.view.SelectionScreenView;
+
+import javax.inject.Inject;
+
+import dagger.Module;
 
 public class SelectionActivity extends FragmentActivity {
 
     private SelectionScreenView selectionScreenView;
+    @Inject Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((DependencyInjector) getApplication()).inject(this);
         selectionScreenView = new SelectionScreenView(this);
         setContentView(selectionScreenView);
         selectionScreenView.setListener(new SelectionScreenView.SimpleListener() {
@@ -26,6 +35,7 @@ public class SelectionActivity extends FragmentActivity {
                                         .Builder(SelectionActivity.this)
                                         .build();
                 startActivity(intent);
+                tracker.track("Recent Selected");
             }
 
             @Override
@@ -34,6 +44,7 @@ public class SelectionActivity extends FragmentActivity {
                                         .Builder(SelectionActivity.this)
                                         .withSearchTerm(query).build();
                 startActivity(intent);
+                tracker.track("Search Submitted", "query", query);
             }
         });
     }
@@ -54,4 +65,7 @@ public class SelectionActivity extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Module(injects = {SelectionActivity.class}, includes = SingletonModule.class)
+    public static class SelectionActivityDepedencyModule { }
 }
