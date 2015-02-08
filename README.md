@@ -4,7 +4,10 @@ SOLID: Noun Project Browser [![Build Status](https://travis-ci.org/blad/solid-an
 This project's goal is to be a demonstration of how [SOLID principles](http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29) can
 be applied to Android development.
 
-![SOLID: NounProject Preview](https://s3.amazonaws.com/uploads.hipchat.com/56587/750791/JJlLwUNKMeDJcOu/previews.png)
+<p align="center">
+<a href="https://play.google.com/store/apps/details?id=com.btellez.solidandroid"><img src="http://developer.android.com/images/brand/en_generic_rgb_wo_60.png"></a><br>
+<img src="https://s3.amazonaws.com/uploads.hipchat.com/56587/750791/JJlLwUNKMeDJcOu/previews.png">
+</p>
 
 ## Contributing
 
