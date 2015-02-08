@@ -9,6 +9,7 @@ public interface Configuration {
     public ApiKeys getNounProjectApiKeys();
     public String getNounProjectBaseUrl();
     public String getNounProjectBaseApiUrl();
+    public String getReplayAPIKey();
 
     /**
      * Shared configuration settings for Release and Development.
@@ -28,6 +29,11 @@ public interface Configuration {
         @Override
         public String getNounProjectBaseUrl() {
             return context.getString(R.string.noun_project_base_url);
+        }
+
+        @Override
+        public String getReplayAPIKey() {
+            return context.getString(R.string.replay_io_api_key);
         }
     }
 

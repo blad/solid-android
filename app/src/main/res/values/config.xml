@@ -23,4 +23,7 @@
 
     <string name="noun_project_base_api_url">http://api.thenounproject.com/</string>
     <string name="noun_project_base_url">http://www.thenounproject.com</string>
+
+    <!-- TODO: Fill in Secret -->
+    <string name="replay_io_api_key">fill-in-production-secret</string>
 </resources>

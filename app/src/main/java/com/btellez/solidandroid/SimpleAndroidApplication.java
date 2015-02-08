@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.btellez.solidandroid.activity.SearchResultsActivity;
+import com.btellez.solidandroid.activity.SelectionActivity;
+import com.btellez.solidandroid.activity.SettingsActivity;
 import com.btellez.solidandroid.module.DependencyInjector;
 
 import dagger.Module;
@@ -39,7 +41,9 @@ public class SimpleAndroidApplication extends Application implements DependencyI
     public Object[] getModules() {
         return new Object[]{
                 new ApplicationContextModule(this),
-                new SearchResultsActivity.SearchResultDepedencyModule()
+                new SearchResultsActivity.SearchResultDepedencyModule(),
+                new SelectionActivity.SelectionActivityDepedencyModule(),
+                new SettingsActivity.GeneralPreferenceFragment.GeneralPreferenceDepedencyModule()
         };
     }
 

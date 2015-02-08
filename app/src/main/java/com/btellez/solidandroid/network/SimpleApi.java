@@ -10,8 +10,6 @@ import java.io.IOException;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import hugo.weaving.DebugLog;
-
 @Singleton
 public class SimpleApi {
     private static final String TAG = SimpleApi.class.getSimpleName();
@@ -28,7 +26,6 @@ public class SimpleApi {
         eventBus.post(new Failure(new IOException()));
     }
 
-    @DebugLog
     public boolean isValidResult(Exception e, JsonObject result) {
         // TODO: Implement a better is valid method.
         return e == null && result != null;

@@ -15,8 +15,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import hugo.weaving.DebugLog;
-
 public interface IconParser {
     public List<Icon> fromJson(String jsonString, String dataKey);
 
@@ -27,7 +25,7 @@ public interface IconParser {
         Gson gson = new GsonBuilder().registerTypeAdapter(Icon.class, new IconDeserializer()).create();
         JsonParser parser = new JsonParser();
 
-        @Override @DebugLog
+        @Override
         public List<Icon> fromJson(String jsonString, String dataKey) {
             JsonElement json = parser.parse(jsonString);
             JsonArray iconList;
