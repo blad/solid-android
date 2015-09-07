@@ -2,6 +2,7 @@ package com.btellez.solidandroid.network;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.btellez.solidandroid.configuration.Configuration;
 import com.btellez.solidandroid.model.Icon;
@@ -40,21 +41,27 @@ public class OkNounProjectApi implements  NounProjectApi {
     @Override
     public void search(String term, final Callback callback) {
         String endpoint = new EndpointBuilder().buildSearchUrl(configuration, term);
-        Request request = buildRequest(endpoint, NounProjectOAuth.RequestType.GET);
-        client.newCall(request).enqueue(new OkHttpCallback(callback));
+        Request request = buildRequestPublic(endpoint);
+        client.newCall(request).enqueue(new OkHttpCallback(callback, "icons"));
     }
 
     @Override
     public void recent(final Callback callback) {
         String endpoint = new EndpointBuilder().buildRecentUrl(configuration);
-        Request request = buildRequest(endpoint, NounProjectOAuth.RequestType.GET);
+        Request request = buildRequestOAuth(endpoint, NounProjectOAuth.RequestType.GET);
         client.newCall(request).enqueue(new OkHttpCallback(callback, "recent_uploads"));
     }
 
-    private Request buildRequest(String endpoint, NounProjectOAuth.RequestType method) {
+    private Request buildRequestPublic(String endpoint) {
+        return new Request.Builder().url(endpoint)
+                                    .addHeader("X-Requested-With", "XMLHttpRequest")
+                                    .build();
+    }
+
+    private Request buildRequestOAuth(String endpoint, NounProjectOAuth.RequestType method) {
         String oAuthString = oAuth.withEnpoint(endpoint)
-                                    .withRequestType(method)
-                                    .getOAuthHeader();
+                                  .withRequestType(method)
+                                  .getOAuthHeader();
 
         return new Request.Builder().url(endpoint)
                                     .addHeader("Authorization", oAuthString)
