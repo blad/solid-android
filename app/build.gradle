@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'hugo' // call after applying android plugin
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 23
     buildToolsVersion "21.1.2"
 
     defaultConfig {
@@ -14,7 +14,7 @@ android {
 
         applicationId "com.btellez.solidandroid"
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 23
 
         versionCode 2
         versionName "1.1"
@@ -54,9 +54,9 @@ dependencies {
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.1'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.1'
     androidTestCompile 'org.mockito:mockito-core:1.9.5'
-    compile 'com.android.support:support-v4:21.0.3'
-    compile 'com.android.support:support-v13:21.0.3'
-    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:support-v4:23.0.1'
+    compile 'com.android.support:support-v13:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.jakewharton:butterknife:5.1.1'
     compile 'com.squareup.dagger:dagger-compiler:1.2.2'

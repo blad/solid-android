@@ -24,11 +24,4 @@ public class SingletonTestModule {
         return Mockito.mock(Bus.class);
     }
 
-
-    @Provides @Singleton SimpleApi provideSimpleApi(Bus bus, Context context) {
-        // We return a spy rather than a mock because the SimpleApi class is injected by Dagger
-        // and returns a SimpleApi_Proxy, which is triggers an Exception since it is not explicitly
-        // registered for injections.
-        return Mockito.spy(new SimpleApi(bus, context));
-    }
 }

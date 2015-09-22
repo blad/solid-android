@@ -54,10 +54,6 @@ public class SingletonModule {
         return new Bus();
     }
 
-    @Provides @Singleton SimpleApi provideSimpleApi(Bus bus, Context context) {
-        return new SimpleApi(bus, context);
-    }
-
     @Provides @Singleton Tracker provideTracker(Context context, Configuration appConfig) {
         if (BuildConfig.DEBUG) {
             return new Tracker.SimpleTracker();
