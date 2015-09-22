@@ -28,10 +28,10 @@ public class SingleIconResultItem extends FrameLayout {
      * Listener is used to keep non-ui logic out of the view.
      */
     public interface Listener {
-        public void onLinkClicked(String url);
-        public void requestDownloadInto(String url, ImageView imageView);
+        void onLinkClicked(String url);
+        void requestDownloadInto(String url, ImageView imageView);
 
-        public static class SimpleListener implements Listener {
+        class SimpleListener implements Listener {
             @Override public void onLinkClicked(String url) {/* no-op */}
             @Override public void requestDownloadInto(String url, ImageView imageView) {/* no-op */}
         }

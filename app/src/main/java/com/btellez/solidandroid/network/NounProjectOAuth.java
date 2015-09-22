@@ -46,15 +46,15 @@ public class NounProjectOAuth {
 
     public String getOAuthHeader() {
         assertReady(endpoint, requestType);
-        List<Pair<String, String>> oAuthHeaderList = new ArrayList<Pair<String, String>>();
-        oAuthHeaderList.add(new Pair<String, String>("oauth_signature_method", "HMAC-SHA1"));
-        oAuthHeaderList.add(new Pair<String, String>("oauth_version", "1.0"));
-        oAuthHeaderList.add(new Pair<String, String>("oauth_consumer_key", keys.getKey()));
-        oAuthHeaderList.add(new Pair<String, String>("oauth_nonce", getNounce(32)));
-        oAuthHeaderList.add(new Pair<String, String>("oauth_timestamp", String.valueOf(System.currentTimeMillis()/1000)));
+        List<Pair<String, String>> oAuthHeaderList = new ArrayList<>();
+        oAuthHeaderList.add(new Pair<>("oauth_signature_method", "HMAC-SHA1"));
+        oAuthHeaderList.add(new Pair<>("oauth_version", "1.0"));
+        oAuthHeaderList.add(new Pair<>("oauth_consumer_key", keys.getKey()));
+        oAuthHeaderList.add(new Pair<>("oauth_nonce", getNounce(32)));
+        oAuthHeaderList.add(new Pair<>("oauth_timestamp", String.valueOf(System.currentTimeMillis()/1000)));
 
         String signature = computeSignature(sortOAuthHeaderParams(oAuthHeaderList));
-        oAuthHeaderList.add(new Pair<String, String>("oauth_signature", encode(signature)));
+        oAuthHeaderList.add(new Pair<>("oauth_signature", encode(signature)));
         return "OAuth "+ getOAuthheaderString(sortOAuthHeaderParams(oAuthHeaderList));
     }
 

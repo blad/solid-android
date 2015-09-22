@@ -43,9 +43,9 @@ public class SelectionScreenView extends FrameLayout {
      * the the view.
      */
     public interface Listener {
-        public void onSeachGroupSelected();
-        public void onRecentGroupSelected();
-        public void onSubmitSearchQuery(String query);
+        void onSeachGroupSelected();
+        void onRecentGroupSelected();
+        void onSubmitSearchQuery(String query);
     }
 
     public static class SimpleListener implements Listener {

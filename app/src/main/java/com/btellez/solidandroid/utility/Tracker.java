@@ -5,9 +5,6 @@ import android.content.Context;
 import com.btellez.solidandroid.BuildConfig;
 import com.btellez.solidandroid.configuration.Configuration;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.Map;
 
 import hugo.weaving.DebugLog;
@@ -15,14 +12,14 @@ import io.replay.framework.Config;
 import io.replay.framework.ReplayIO;
 
 public interface Tracker {
-    public void track(String eventName);
-    public void track(String eventName, String...properties);
-    public void track(String eventName, Map<String, ?> properties);
+    void track(String eventName);
+    void track(String eventName, String...properties);
+    void track(String eventName, Map<String, ?> properties);
 
     /**
      * Simple No-op implementation of tracking.
      */
-    public static class SimpleTracker implements Tracker {
+    class SimpleTracker implements Tracker {
         @DebugLog @Override public void track(String eventName) {}
         @DebugLog @Override public void track(String eventName, String... properties) {}
         @DebugLog @Override public void track(String eventName, Map<String, ?> properties) {}
@@ -31,7 +28,7 @@ public interface Tracker {
     /**
      * Replay.io implementation of tracking
      */
-    public static class ReplayTracker implements Tracker {
+    class ReplayTracker implements Tracker {
 
         public ReplayTracker(Context context, Configuration appConfig) {
             // Set-Up Replay Settings

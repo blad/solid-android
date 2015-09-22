@@ -6,15 +6,15 @@ import com.btellez.solidandroid.R;
 import com.btellez.solidandroid.model.ApiKeys;
 
 public interface Configuration {
-    public ApiKeys getNounProjectApiKeys();
-    public String getNounProjectBaseUrl();
-    public String getNounProjectBaseApiUrl();
-    public String getReplayAPIKey();
+    ApiKeys getNounProjectApiKeys();
+    String getNounProjectBaseUrl();
+    String getNounProjectBaseApiUrl();
+    String getReplayAPIKey();
 
     /**
      * Shared configuration settings for Release and Development.
      */
-    public static abstract class BaseConfiguration implements Configuration {
+    abstract class BaseConfiguration implements Configuration {
         protected Context context;
 
         protected BaseConfiguration(Context context) {
@@ -40,7 +40,7 @@ public interface Configuration {
     /**
      * Configuration for the Release Version of our Application.
      */
-    public static class ReleaseConfiguration extends BaseConfiguration {
+    class ReleaseConfiguration extends BaseConfiguration {
 
         protected ReleaseConfiguration(Context context) {
             super(context);
@@ -64,7 +64,7 @@ public interface Configuration {
     /**
      * Configuration for the Development version of our application
      */
-    public static class DevelopmentConfiguration extends BaseConfiguration {
+    class DevelopmentConfiguration extends BaseConfiguration {
 
         public DevelopmentConfiguration(Context context) {
             super(context);

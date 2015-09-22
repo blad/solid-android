@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import com.btellez.solidandroid.network.SimpleApi;
+
 import com.btellez.solidandroid.test.MockApplicationInjectable;
 
 /**

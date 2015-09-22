@@ -5,9 +5,12 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 public interface NetworkBitmapClient {
-    public void downloadInto(String url, ImageView imageView);
+    void downloadInto(String url, ImageView imageView);
 
-    public static class PicassoBitmapClient implements NetworkBitmapClient {
+    /**
+     * Picasso Implementation of NetworkBitmapClient
+     */
+    class PicassoBitmapClient implements NetworkBitmapClient {
         @Override public void downloadInto(String url, ImageView imageView) {
             Picasso.with(imageView.getContext()).load(url).into(imageView);
         }

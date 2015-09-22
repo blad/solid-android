@@ -15,15 +15,13 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import hugo.weaving.DebugLog;
-
 public interface IconParser {
-    public List<Icon> fromJson(String jsonString, String dataKey);
+    List<Icon> fromJson(String jsonString, String dataKey);
 
     /**
      * Google Gson Implementation of our Icon Parser
      */
-    public static class GsonIconParser implements IconParser {
+    class GsonIconParser implements IconParser {
         Gson gson = new GsonBuilder().registerTypeAdapter(Icon.class, new IconDeserializer()).create();
         JsonParser parser = new JsonParser();
 
@@ -37,7 +35,7 @@ public interface IconParser {
                 iconList = json.getAsJsonObject().getAsJsonArray(dataKey);
             }
 
-            List<Icon> icons = new ArrayList<Icon>(iconList.size());
+            List<Icon> icons = new ArrayList<>(iconList.size());
             for (JsonElement item : iconList) {
                 icons.add(gson.fromJson(item, Icon.class));
             }

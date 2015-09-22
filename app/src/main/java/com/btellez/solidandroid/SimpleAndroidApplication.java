@@ -22,7 +22,7 @@ public class SimpleAndroidApplication extends Application implements DependencyI
             context = app;
         }
 
-        @Provides public Context provideContext(){
+        @Provides public Context provideContext() {
             return context;
         }
     }

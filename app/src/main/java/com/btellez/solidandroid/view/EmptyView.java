@@ -15,9 +15,10 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class EmptyView extends FrameLayout {
+
     public interface Listener {
-        public void onPrimaryActionClicked();
-        public void onSecondaryActionClicked();
+        void onPrimaryActionClicked();
+        void onSecondaryActionClicked();
     }
     
     public static class SimpleListener implements Listener {

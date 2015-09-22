@@ -2,7 +2,6 @@ package com.btellez.solidandroid.network;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.btellez.solidandroid.configuration.Configuration;
 import com.btellez.solidandroid.model.Icon;
@@ -52,12 +51,26 @@ public class OkNounProjectApi implements  NounProjectApi {
         client.newCall(request).enqueue(new OkHttpCallback(callback, "recent_uploads"));
     }
 
+
+    /**
+     * Builds Requests for public endpoints that do not require authentication.
+     *
+     * @param endpoint
+     * @return Request
+     */
     private Request buildRequestPublic(String endpoint) {
         return new Request.Builder().url(endpoint)
                                     .addHeader("X-Requested-With", "XMLHttpRequest")
                                     .build();
     }
 
+
+    /**
+     * Builds Request for endpoints that do require authentication.
+     * @param endpoint
+     * @param method
+     * @return Request
+     */
     private Request buildRequestOAuth(String endpoint, NounProjectOAuth.RequestType method) {
         String oAuthString = oAuth.withEnpoint(endpoint)
                                   .withRequestType(method)
@@ -69,10 +82,8 @@ public class OkNounProjectApi implements  NounProjectApi {
     }
 
     /**
-     * OkHttpCallback implementation that calls back to out the callback
-     * defined by out interface. This way our callback implementation
-     * is not tied to okHttp, but to out own Callback, this decouples
-     * the our app from OkHttp.
+     * OkHttpCallback wrapper the app's defined callback interface.
+     * This allows the the callback implementation to be decoupled form okHttp.
      */
     private class OkHttpCallback implements com.squareup.okhttp.Callback {
         public Callback callback;

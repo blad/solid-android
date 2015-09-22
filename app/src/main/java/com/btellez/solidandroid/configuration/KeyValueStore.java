@@ -12,23 +12,15 @@ import java.util.HashMap;
  */
 public interface KeyValueStore {
 
-    public void putFloat(String key, float value);
-
-    public float getFloat(String key, float defaultValue);
-
-    public void putInt(String key, int value);
-
-    public int getInt(String key, int defaultValue);
-
-    public String getString(String key, String defaultValue);
-
-    public String getString(String key);
-
-    public void putString(String key, String value);
-    
-    public boolean getBool(String key);
-    
-    public void putBool(String key, boolean value);
+    void putFloat(String key, float value);
+    float getFloat(String key, float defaultValue);
+    void putInt(String key, int value);
+    int getInt(String key, int defaultValue);
+    String getString(String key, String defaultValue);
+    String getString(String key);
+    void putString(String key, String value);
+    boolean getBool(String key);
+    void putBool(String key, boolean value);
 
 
     /**
@@ -38,7 +30,7 @@ public interface KeyValueStore {
      * This allows us to use this instead as to satisfy dependencies in
      * tests where we are not relying on the behaviour of KeyValueStore.
      */
-    public class SimpleKeyValueStore implements KeyValueStore {
+    class SimpleKeyValueStore implements KeyValueStore {
         @Override public void putFloat(String key, float value) {}
         @Override public float getFloat(String key, float defaultValue) {return 0;}
         @Override public void putInt(String key, int value) {}
@@ -55,7 +47,7 @@ public interface KeyValueStore {
      * The values stored in with this key-value store implementation
      * will persist as long as the application is not unisntalled.
      */
-    public static class SharedPrefs implements KeyValueStore {
+    class SharedPrefs implements KeyValueStore {
         private static final String SHARE_PREFS_KEY_VALUE_STORE = "share_prefs_key_value_store";
         private SharedPreferences prefs;
 
@@ -117,7 +109,7 @@ public interface KeyValueStore {
      * Session is an in-memory key-value store whose data will
      * cease to exist when the application is killed.
      */
-    public static class Session implements KeyValueStore {
+    class Session implements KeyValueStore {
         private HashMap<String, Object> map = new HashMap<String, Object>();
 
         @Override

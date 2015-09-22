@@ -3,6 +3,7 @@ package com.btellez.solidandroid.module;
 import android.content.Context;
 
 import com.btellez.solidandroid.BuildConfig;
+import com.btellez.solidandroid.SimpleAndroidApplication;
 import com.btellez.solidandroid.configuration.Configuration;
 import com.btellez.solidandroid.model.IconParser;
 import com.btellez.solidandroid.network.NetworkBitmapClient;
@@ -15,11 +16,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import com.btellez.solidandroid.network.SimpleApi;
-import com.btellez.solidandroid.SimpleAndroidApplication;
 
 /**
- * This module defines is a provider for singletons across the application.
+ * This module is a provider for singletons across the application.
  *
  * If you find yourself creating a singleton class, you may be able to simply
  * use the @Singleton annotation and inject the singleton into your activities

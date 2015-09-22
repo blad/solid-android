@@ -6,10 +6,14 @@ import com.btellez.solidandroid.model.Icon;
 import java.util.List;
 
 public interface NounProjectApi {
-    public void search(String term, Callback callback);
-    public void recent(Callback callback);
+    void search(String term, Callback callback);
+    void recent(Callback callback);
 
-    public static class EndpointBuilder {
+    /**
+     * Endpoint Helper that builds correctly formatter URLs
+     * for the NounProjectAPI.
+     */
+    class EndpointBuilder {
         public String buildSearchUrl(Configuration config, String term) {
             return config.getNounProjectBaseUrl() + "/search/json/icon/?q=" + term + "/?page=1&limit=100&offset=0&raw_html=false";
         }
@@ -22,12 +26,17 @@ public interface NounProjectApi {
     /**
      * Callback that alerts any listeners about success or failure of the api call.
      */
-    public interface Callback {
-        public void onSuccess(List<Icon> icons);
-        public void onFailure(Throwable error);
+    interface Callback {
+        void onSuccess(List<Icon> icons);
+        void onFailure(Throwable error);
     }
 
-    public static class SimpleCallback implements Callback {
+
+    /**
+     * No-Op Implementation of the Callback that allows overriding select methods,
+     * instead of forcing implementor to override all methods.
+     */
+    class SimpleCallback implements Callback {
         @Override public void onSuccess(List<Icon> icons) {/* no-op */}
         @Override public void onFailure(Throwable error) {/* no-op */}
     }
