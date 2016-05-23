@@ -5,4 +5,13 @@ dependencies:
 
 test:
   override:
-    - ./gradlew assembleDebug
+    - ./gradlew assembleDebug # Build the Project...make sure it compiles
+    # TODO: Add and Run Test Suite!
+
+
+deployment:
+  testers: # just a label
+    branch: beta
+    commands:
+      - ./gradlew assembleDebug crashlyticsUploadDistributionDebug
+

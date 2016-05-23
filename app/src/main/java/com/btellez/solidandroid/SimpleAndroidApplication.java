@@ -8,9 +8,11 @@ import com.btellez.solidandroid.activity.SelectionActivity;
 import com.btellez.solidandroid.activity.SettingsActivity;
 import com.btellez.solidandroid.module.DependencyInjector;
 
+import com.crashlytics.android.Crashlytics;
 import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
+import io.fabric.sdk.android.Fabric;
 
 public class SimpleAndroidApplication extends Application implements DependencyInjector {
 
@@ -33,6 +35,7 @@ public class SimpleAndroidApplication extends Application implements DependencyI
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         mObjectGraph = ObjectGraph.create(getModules());
     }
 

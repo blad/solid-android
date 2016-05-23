@@ -1,5 +1,19 @@
-apply plugin: 'android-sdk-manager'
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 apply plugin: 'hugo' // call after applying android plugin
 
 android {
@@ -28,7 +42,9 @@ android {
     buildTypes {
         debug {
             testCoverageEnabled true
+            ext.betaDistributionReleaseNotesFilePath = 'app/release_notes.txt'
         }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -66,4 +82,35 @@ dependencies {
     compile 'com.squareup:otto:1.3.5'
     compile 'com.squareup.picasso:picasso:2.4.0'
     compile 'io.replay:replay-android:0.9.6'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
 }
+
+// Tasks To Avoid Committing the Fabric API Key:
+task crashlyticPreBuild(type: Exec, description: 'Sets the Fabric API Key') {
+    println ':app:crashlyticPreBuild'
+    workingDir './'
+    def fabricAPIKey = System.getenv('FABRIC_API_KEY')
+    // TODO: Update to a Cross-Platform Solution
+    commandLine 'bash', '-c', "find . -name  '*.xml' | xargs sed -i '' -e \"s/__FABRIC_API_KEY__/$fabricAPIKey/\""
+}
+
+task crashlyticPostBuild(type: Exec, description: 'Resets the Fabric API Key') {
+    println ':app:crashlyticPostBuild'
+    workingDir './'
+    def fabricAPIKey = System.getenv('FABRIC_API_KEY')
+    // TODO: Update to a Cross-Platform Solution
+    commandLine 'bash', '-c', "find . -name  '*.xml' | xargs sed -i '' -e \"s/$fabricAPIKey/__FABRIC_API_KEY__/\""
+}
+
+// Prepare for Build:
+preBuild.dependsOn crashlyticPreBuild
+crashlyticsUploadDistributionDebug.dependsOn crashlyticPreBuild
+
+// Clean-Up:
+build.finalizedBy crashlyticPostBuild
+assemble.finalizedBy crashlyticPostBuild
+assembleDebug.finalizedBy crashlyticPostBuild
+crashlyticsUploadDistributionDebug.finalizedBy crashlyticPostBuild
+
