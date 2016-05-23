@@ -1,3 +1,0 @@
-language: android
-
-script: ./gradlew build assembleDebug
