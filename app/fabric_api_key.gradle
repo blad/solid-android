@@ -6,13 +6,13 @@ def fabricAPIKey = System.getenv('FABRIC_API_KEY') ?: fabricAPIKeyPlaceholder
 task crashlyticPreBuild(type: Exec, description: 'Sets the Fabric API Key') {
     println ':app:crashlyticPreBuild'
     workingDir './'
-    commandLine 'bash', '-c', "find . -name  '*.xml' | xargs sed -i '' -e \"s/$fabricAPIKeyPlaceholder/$fabricAPIKey/\""
+    commandLine 'bash', '-c', "find . -name  '*.xml' | xargs sed -i'' -e \"s/$fabricAPIKeyPlaceholder/$fabricAPIKey/\""
 }
 
 task crashlyticPostBuild(type: Exec, description: 'Resets the Fabric API Key') {
     println ':app:crashlyticPostBuild'
     workingDir './'
-    commandLine 'bash', '-c', "find . -name  '*.xml' | xargs sed -i '' -e \"s/$fabricAPIKey/$fabricAPIKeyPlaceholder/\""
+    commandLine 'bash', '-c', "find . -name  '*.xml' | xargs sed -i'' -e \"s/$fabricAPIKey/$fabricAPIKeyPlaceholder/\""
 }
 
 // Prepare for Build:
