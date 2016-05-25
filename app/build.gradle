@@ -1,20 +1,7 @@
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
-
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
-}
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
-
 apply plugin: 'hugo' // call after applying android plugin
+apply from: './fabric_api_key.gradle'
 
 android {
     compileSdkVersion 23
@@ -87,30 +74,17 @@ dependencies {
     }
 }
 
-// Tasks To Avoid Committing the Fabric API Key:
-task crashlyticPreBuild(type: Exec, description: 'Sets the Fabric API Key') {
-    println ':app:crashlyticPreBuild'
-    workingDir './'
-    def fabricAPIKey = System.getenv('FABRIC_API_KEY')
-    // TODO: Update to a Cross-Platform Solution
-    commandLine 'bash', '-c', "find . -name  '*.xml' | xargs sed -i '' -e \"s/__FABRIC_API_KEY__/$fabricAPIKey/\""
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
 }
 
-task crashlyticPostBuild(type: Exec, description: 'Resets the Fabric API Key') {
-    println ':app:crashlyticPostBuild'
-    workingDir './'
-    def fabricAPIKey = System.getenv('FABRIC_API_KEY')
-    // TODO: Update to a Cross-Platform Solution
-    commandLine 'bash', '-c', "find . -name  '*.xml' | xargs sed -i '' -e \"s/$fabricAPIKey/__FABRIC_API_KEY__/\""
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
 }
-
-// Prepare for Build:
-preBuild.dependsOn crashlyticPreBuild
-crashlyticsUploadDistributionDebug.dependsOn crashlyticPreBuild
-
-// Clean-Up:
-build.finalizedBy crashlyticPostBuild
-assemble.finalizedBy crashlyticPostBuild
-assembleDebug.finalizedBy crashlyticPostBuild
-crashlyticsUploadDistributionDebug.finalizedBy crashlyticPostBuild
 

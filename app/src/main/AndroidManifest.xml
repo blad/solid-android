@@ -28,9 +28,11 @@
             android:name=".activity.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+
+        <!-- API Value Below is a Placeholder Replaced During the Build Process -->
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="__FABRIC_API_KEY__"
+            android:value="c0ffeec0ffeec0ffeec0ffeec0ffeec0ffeec0ff"
             />
     </application>
 
