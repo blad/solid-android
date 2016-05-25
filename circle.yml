@@ -10,8 +10,11 @@ test:
 
 
 deployment:
-  testers: # just a label
+  betaTesting:
     branch: beta
     commands:
-      - ./gradlew assembleDebug crashlyticsUploadDistributionDebug
+      - ./gradlew assembleDebug
+      - ./gradlew crashlyticPreBuild # Inject Crashlytics API Keys
+      - ./gradlew crashlyticsUploadDistributionDebug
+      - ./gradlew crashlyticPostBuild # Reset Crashlytics Placeholder Keys
 
