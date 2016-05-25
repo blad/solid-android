@@ -13,8 +13,10 @@ deployment:
   betaTesting:
     branch: beta
     commands:
+      - echo "apiSecret=$FABRIC_API_SECRET" > ./app/fabric.properties
       - ./gradlew assembleDebug
       - ./gradlew crashlyticPreBuild # Inject Crashlytics API Keys
       - ./gradlew crashlyticsUploadDistributionDebug
       - ./gradlew crashlyticPostBuild # Reset Crashlytics Placeholder Keys
+      - git reset --hard # Clean Up Repo
 
