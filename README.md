@@ -1,5 +1,7 @@
-SOLID: Noun Project Browser [![Build Status](https://travis-ci.org/blad/solid-android.svg?branch=master)](https://travis-ci.org/blad/solid-android)
+SOLID: Noun Project Browser (Circa 2015)
 ============================
+
+[![Build Status](https://travis-ci.org/blad/solid-android.svg?branch=master)](https://travis-ci.org/blad/solid-android)
 
 This project's goal is to be a demonstration of how [SOLID principles](http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29) can
 be applied to Android development.
@@ -13,15 +15,13 @@ be applied to Android development.
 
 Contributions are welcome to the project. The goal is to adhere to the SOLID principles.
 
-### Reporting Bugs & Bug Fixes
+### Bug Fixes
 
-If you find a bug you can report it by using the [issues section](https://github.com/blad/solid-android/issues) for this project. Bug fixes should also be done in pull requests.
+Bug fixes can be contributed via pull requests for this project.
 
-### Features & Feature Requests
+### Features
 
-If there is some feature you want to implement, I invite you to do a pull request.
-
-Feature request should be reported in the [issues section](https://github.com/blad/solid-android/issues) for this project.
+Features can be contributed via pull-requests for this project.
 
 ## Tools & Libraries
 
