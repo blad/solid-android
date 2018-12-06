@@ -2,6 +2,7 @@ SOLID: Noun Project Browser (Circa 2015)
 ============================
 
 [![Build Status](https://travis-ci.org/blad/solid-android.svg?branch=master)](https://travis-ci.org/blad/solid-android)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fblad%2Fsolid-android.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fblad%2Fsolid-android?ref=badge_shield)
 
 This project's goal is to be a demonstration of how [SOLID principles](http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29) can
 be applied to Android development.
@@ -91,3 +92,6 @@ Once you have the API key and secret, replace the placeholder values in: `app/sr
 > WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 > See the License for the specific language governing permissions and
 > limitations under the License.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fblad%2Fsolid-android.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fblad%2Fsolid-android?ref=badge_large)
